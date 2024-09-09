@@ -11,15 +11,26 @@ export const submitDevForm = createAsyncThunk(
     {
       name,
       email,
-      seniority,
+      cell,
+      dob,
+      nationality,
+      gender,
       experience,
-      salary,
-      availableFrom,
-      reasonForApplying,
-      hardestWorked,
-      interviewAvailability,
+      currentlyEmployed,
+      disability,
+      disabilityType,
+      reffered,
+      refferedBy,
+      highestQualification,
+      highestQualificationYear,
+      highestQualificationInstitution,
+      currentAreaOfResidence,
+      abilityToRelocate,
+      workExperience,
+      goals,
+      salaryExpectation,
+      notice,
       cv,
-      aptitudeScore,
     },
     { rejectWithValue }
   ) => {
@@ -27,19 +38,30 @@ export const submitDevForm = createAsyncThunk(
       const data = {
         name,
         email,
-        seniority,
+        cell,
+        dob,
+        nationality,
+        gender,
         experience,
-        salary,
-        availableFrom,
-        reasonForApplying,
-        hardestWorked,
-        interviewAvailability,
+        currentlyEmployed,
+        disability,
+        disabilityType,
+        reffered,
+        refferedBy,
+        highestQualification,
+        highestQualificationYear,
+        highestQualificationInstitution,
+        currentAreaOfResidence,
+        abilityToRelocate,
+        workExperience,
+        goals,
+        salaryExpectation,
+        notice,
         cv,
-        aptitudeScore,
       };
 
       const res = await axios.post(`${url}/recruitment/submitDevForm`, data);
-
+      console.log("Data",data)
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -60,7 +82,6 @@ export const submitConsultantForm = createAsyncThunk(
       dob,
       nationality,
       gender,
-      seniority,
       experience,
       currentlyEmployed,
       disability,
@@ -70,10 +91,13 @@ export const submitConsultantForm = createAsyncThunk(
       highestQualification,
       highestQualificationYear,
       highestQualificationInstitution,
-      interviewLocation,
       currentAreaOfResidence,
+      abilityToRelocate,
+      workExperience,
+      goals,
+      salaryExpectation,
+      notice,
       cv,
-      aptitudeScore,
     },
     { rejectWithValue }
   ) => {
@@ -85,7 +109,6 @@ export const submitConsultantForm = createAsyncThunk(
         dob,
         nationality,
         gender,
-        seniority,
         experience,
         currentlyEmployed,
         disability,
@@ -95,17 +118,20 @@ export const submitConsultantForm = createAsyncThunk(
         highestQualification,
         highestQualificationYear,
         highestQualificationInstitution,
-        interviewLocation,
         currentAreaOfResidence,
+        abilityToRelocate,
+        workExperience,
+        goals,
+        salaryExpectation,
+        notice,
         cv,
-        aptitudeScore,
       };
 
       const res = await axios.post(
         `${url}/recruitment/submitConsultantForm`,
         data
       );
-
+      console.log("Data",data)
       return res.data;
     } catch (error) {
       if (!error.response) {

@@ -19,41 +19,13 @@ export function HomePage() {
   const dispatch = useDispatch();
 
   const selectConsultant = () => {
-    if (consultant) {
-      setConsultant(false);
-    } else {
-      setConsultant(true);
-      dev && setDev(false);
-    }
+    dispatch(setDepartement("consultant"));
+    navigate("/form");
   };
 
   const selectDev = () => {
-    if (dev) {
-      setDev(false);
-    } else {
-      setDev(true);
-      consultant && setConsultant(false);
-    }
-  };
-
-  const handleClick = () => {
-    if (consultant) {
-      dispatch(setDepartement("consultant"));
+    dispatch(setDepartement("developer"));
       navigate("/form");
-    } else if (dev) {
-      dispatch(setDepartement("developer"));
-      navigate("/form");
-    } else {
-      toast.error(`Please select a role.`, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
   };
 
   return (
@@ -61,59 +33,13 @@ export function HomePage() {
       <RecruitmentHeader />
       <ToastContainer />
       <div className="bg-white h-screen flex items-center justify-center">
-        <div className="mx-auto rounded-2xl bg-white md:w-1/2">
-          <h1 className="text-3xl font-bold text-center">
-            Welcome to Convergenc3 recruitment
+        <div className="mx-auto rounded-2xl bg-white md:w-3/4">
+          <h1 className="text-3xl font-bold text-center pb-4">
+            Welcome to Convergenc3 recruitment 
           </h1>
-          <p className="text-center mt-3">
+          <h2 className="text-center mt-3">
             Are you a consultant or a developer?
-          </p>
-          {/* <div className="my-3 p-10 flex h-full">
-            <div className="flex-1 bg-white h-full p-5">
-              <div
-                onClick={selectDev}
-                className={`p-5 rounded-xl flex flex-col items-center justify-between h-full cursor-pointer ${
-                  dev
-                    ? "bg-red-50 border-2 border-red-600"
-                    : "bg-white border border-slate-300"
-                }`}
-              >
-                <div className="basis-10/12 w-full flex items-center justify-center">
-                  <img
-                    src="./images/dev.svg"
-                    width="180"
-                    height="100"
-                    alt="Convergence Logo"
-                  />
-                </div>
-                <h2 className="basis-2/12 flex items-end font-semibold">
-                  Developer
-                </h2>
-              </div>
-            </div>
-            <div className="flex-1 bg-white h-full p-5">
-              <div
-                onClick={selectConsultant}
-                className={`p-5 rounded-xl flex flex-col items-center justify-between h-full cursor-pointer ${
-                  consultant
-                    ? "bg-red-50 border-2 border-red-600"
-                    : "bg-white border border-slate-300"
-                }`}
-              >
-                <div className="basis-10/12 w-full flex items-center justify-center">
-                  <img
-                    src="./images/consultant.svg"
-                    width="180"
-                    height="120"
-                    alt="Convergence Logo"
-                  />
-                </div>
-                <h2 className="basis-2/12 flex items-end font-semibold">
-                  Consultant
-                </h2>
-              </div>
-            </div>
-          </div> */}
+          </h2>
           <Grid container spacing={5} sx={{ py: 5 }}>
             <Grid
               item
@@ -192,16 +118,6 @@ export function HomePage() {
               </Typography>
             </Grid>
           </Grid>
-          <div className="horizontal container mt-5 ">
-            <div className="container mt-4 mb-8 flex justify-around">
-              <button
-                onClick={handleClick}
-                className="flex items-center cursor-pointer rounded-lg bg-red-600 py-2 px-4 font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-slate-700 hover:text-white"
-              >
-                Continue <FaLongArrowAltRight className="ml-2" />
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -4,9 +4,7 @@ export function FormReview() {
   const department = useSelector((state) => state.formDetails.department);
 
   const handleClick = () => {
-    window.opener = null;
-    window.open("", "_self");
-    window.close();
+    window.location.href = "/";
   };
 
   return (

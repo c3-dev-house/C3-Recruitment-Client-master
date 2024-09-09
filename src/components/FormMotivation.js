@@ -14,8 +14,6 @@ import {getUniversitiesSA} from "../store/actions/recruitmentActions";
 import { TextField } from "@mui/material";
 
 export function FormMotivation() {
-  const [reason, setReason] = useState("");
-  const [hardest, setHardest] = useState("");
 
   const [qualification, setQualification] = useState("");
   const [year, setYear] = useState("");
@@ -25,7 +23,6 @@ export function FormMotivation() {
 
   const step = useSelector((state) => state.formDetails.step);
   const dispatch = useDispatch();
-  const department = useSelector((state) => state.formDetails.department);
 
   const motivationDetails = useSelector(
     (state) => state.formDetails.motivationDetails
@@ -40,23 +37,23 @@ export function FormMotivation() {
   const [otherStudyField,setOtherStudyField]=useState("");
 
   const highestQualificationsArray=[
-    "Bachelors of engineering",
+    "Bachelors of Engineering",
     "Bachelor of Engineering Technology",
     "Bachelors of Science Engineering ",
-    "Masters of engineering",
-    "PhD in engineering",
-    "Bachelors of commerce" ,
-    "Bachelors of science",
+    "Masters of Engineering",
+    "PhD in Engineering",
+    "Bachelors of Commerce" ,
+    "Bachelors of Science",
     "Other",
   ]
 
 //User will have to specify their field related to these qualifications
   const qualificationsRequestingSpecifics=[ 
-    "Bachelors of engineering",
+    "Bachelors of Engineering",
     "Bachelor of Engineering Technology",
     "Bachelors of Science Engineering ",
-    "Masters of engineering",
-    "PhD in engineering",
+    "Masters of Engineering",
+    "PhD in Engineering",
   ]
 
   const studyFields=[
@@ -113,8 +110,6 @@ export function FormMotivation() {
   
 
   useEffect(() => {
-    motivationDetails ? setReason(motivationDetails.reason) : setReason("");
-    motivationDetails ? setHardest(motivationDetails.hardest) : setHardest("");
     motivationDetails
       ? setQualification(motivationDetails.qualification)
       : setQualification("");
@@ -130,20 +125,6 @@ export function FormMotivation() {
   }, [qualification]);
 
   const handleNext = () => {
-    if (department === "developer") {
-      if (reason.length > 0 && hardest.length > 0) {
-        dispatch(setMotivationDetails({ reason, hardest }));
-        dispatch(nextStep());
-      } else {
-        toast.error(`Please fill in all fields.`, {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          progress: undefined,
-        });
-      }
-    } else {
       if (
         qualification.length > 0 &&
         year.length > 0 &&
@@ -170,45 +151,12 @@ export function FormMotivation() {
         });
       }
     }
-  };
 
 
 
   return (
     <div className="flex flex-col ">
       <ToastContainer />
-      {department === "developer" ? (
-        <React.Fragment>
-          <div className="mx-2 w-full flex-1">
-            <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              Why are you applying for this position? (max three sentences)
-            </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-              <textarea
-                onChange={(e) => setReason(e.target.value)}
-                value={reason}
-                name="reason"
-                placeholder="Enter your answer"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-              />
-            </div>
-          </div>
-          <div className="mx-2 w-full flex-1">
-            <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              What is the hardest you've ever worked on something in your life?
-            </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-              <textarea
-                onChange={(e) => setHardest(e.target.value)}
-                value={hardest}
-                name="hardest"
-                placeholder="Enter your answer"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-              />
-            </div>
-          </div>
-        </React.Fragment>
-      ) : (
         <React.Fragment>
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
@@ -356,7 +304,6 @@ export function FormMotivation() {
             </div>
           )}
         </React.Fragment>
-      )}
 
       <FormStepperControl handleNext={handleNext} step={step} />
     </div>

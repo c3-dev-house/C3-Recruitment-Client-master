@@ -52,20 +52,6 @@ export function FormPersonalDetails() {
     }
 
     if (emailError === null) {
-      if (department === "developer") {
-        if (name.length > 0 && email.length > 0) {
-          dispatch(setPersonalDetails({ name, email }));
-          dispatch(nextStep());
-        } else {
-          toast.error(`Please fill in all fields.`, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            progress: undefined,
-          });
-        }
-      } else {
         if (
           name.length > 0 &&
           email.length > 0 &&
@@ -87,7 +73,6 @@ export function FormPersonalDetails() {
             progress: undefined,
           });
         }
-      }
     } else {
       toast.error(`A submission with this email has already been received.`, {
         position: "top-center",
@@ -133,7 +118,6 @@ export function FormPersonalDetails() {
           />
         </div>
       </div>
-      {department === "consultant" && (
         <React.Fragment>
           <div className="flex">
             <div className="mx-2 w-full flex-1">
@@ -201,7 +185,6 @@ export function FormPersonalDetails() {
             </div>
           </div>
         </React.Fragment>
-      )}
       <FormStepperControl handleNext={handleNext} step={step} />
     </div>
   );
