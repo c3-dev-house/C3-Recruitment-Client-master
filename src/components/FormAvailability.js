@@ -9,6 +9,7 @@ import {
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DropdownIcon from "../generalComponents/dropdown";
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -50,8 +51,12 @@ export function FormAvailability() {
   }, [interviewDateDetails]);
 
   const handleNext = () => {
-    if (selectedRelocateOption && residence.length > 0) {
-      console.log("Residence and ", { selectedRelocateOption: selectedRelocateOption, residence,selectedSalary,noticePeriod});
+    if (selectedRelocateOption && 
+      residence.length > 0 &&
+      selectedSalary.length > 0 &&
+      noticePeriod.length > 0
+    ) {
+      // console.log("Residence and ", { selectedRelocateOption: selectedRelocateOption, residence,selectedSalary,noticePeriod});
       dispatch(setInterviewDateDetails({ selectedRelocateOption,residence,selectedSalary,noticePeriod }));
       dispatch(nextStep());
     } else {
@@ -80,7 +85,7 @@ export function FormAvailability() {
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
               Current area of residence
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
                 onChange={(e) => setResidence(e.target.value)}
                 value={residence}
@@ -98,6 +103,7 @@ export function FormAvailability() {
                 <option value="northern cape">Northern Cape</option>
                 <option value="north west">North West</option>
               </select>
+              <DropdownIcon/>
             </div>
           </div>
           <div className="mx-2 w-full flex-1">
@@ -112,7 +118,6 @@ export function FormAvailability() {
                       checked={selectedRelocateOption === "yes"}
                       onChange={handleCheckbox}
                       name="yes"
-                      disabled={selectedRelocateOption && selectedRelocateOption !== "yes"}
                     />
                   }
                   label="Yes"
@@ -124,7 +129,6 @@ export function FormAvailability() {
                       checked={selectedRelocateOption === "no"}
                       onChange={handleCheckbox}
                       name="no"
-                      disabled={selectedRelocateOption && selectedRelocateOption !== "no"}
                     />
                   }
                   label="No"
@@ -136,7 +140,6 @@ export function FormAvailability() {
                       checked={selectedRelocateOption === "limited"}
                       onChange={handleCheckbox}
                       name="limited"
-                      disabled={selectedRelocateOption && selectedRelocateOption !== "limited"}
                     />
                   }
                   label="For a limited amount of time"
@@ -148,7 +151,7 @@ export function FormAvailability() {
             What are your salary expectations? (This is a monthly cost to the company range)
             This ensures what you are looking for is aligned with what we can offer you.
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
                 onChange={(e) => setSelectedSalary(e.target.value)}
                 value={selectedSalary}
@@ -162,13 +165,14 @@ export function FormAvailability() {
                   </option>
                 ))}
               </select>
+              <DropdownIcon/>
             </div>
           </div>
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
               What is your current notice period? (Students please select the option that best fits when you will be graduating)
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
                 onChange={(e) => setNoticePeriod(e.target.value)}
                 value={noticePeriod}
@@ -183,6 +187,7 @@ export function FormAvailability() {
                 <option value="2 calendar months">2 Calendar months</option>
                 <option value="More than 2 months">More than 2 months</option>
               </select>
+              <DropdownIcon/>
             </div>
           </div>
         </React.Fragment>

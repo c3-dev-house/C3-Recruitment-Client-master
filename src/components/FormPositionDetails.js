@@ -6,6 +6,7 @@ import { nextStep, setPositionDetails } from "../store/slices/recruitmentSlice";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DropdownIcon from "../generalComponents/dropdown";
 
 export function FormPositionDetails() {
   const [experience, setExperience] = useState("");
@@ -43,6 +44,12 @@ export function FormPositionDetails() {
   }, [positionDetails]);
 
   const handleNext = () => {
+    // First, run the name validation
+    const isValid = validations(disability,disabilityType,reffered,refferedBy);
+    if (!isValid) {
+      // If name is not valid, stop further execution
+      return;
+    }
     if (
       experience.length > 0 &&
       currentlyEmployed.length > 0 &&
@@ -71,6 +78,30 @@ export function FormPositionDetails() {
     }
   }
 
+  const validations = (disability,type)=>{
+    if (disability === "yes" && !disabilityType.length>0){
+      toast.warning(`Please fill in all fields.`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    if (reffered === "yes" && !refferedBy.length>0){
+      toast.warning(`Please fill in all fields.`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    return true;
+  }
+
   return (
     <div className="flex flex-col ">
       <ToastContainer />
@@ -79,7 +110,7 @@ export function FormPositionDetails() {
           <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
               Years working experience
           </div>
-          <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+          <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
             <select
               onChange={(e) => setExperience(e.target.value)}
               value={experience}
@@ -94,18 +125,40 @@ export function FormPositionDetails() {
                   <option value="5+">More than 5 years</option>
                 </React.Fragment>
             </select>
+            <DropdownIcon/>
           </div>
         </div>
       </div>
-        <React.Fragment>
+      <React.Fragment>
+        <div className="flex">
+        <div className="mx-2 w-full flex-1">
+          <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+            Are you currently employed?
+          </div>
+          <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
+            <select
+              onChange={(e) => setCurrentlyEmployed(e.target.value)}
+              value={currentlyEmployed}
+              name="salary"
+              className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+            >
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <DropdownIcon/>
+          </div>
+        </div>
+        </div>
+        <div className="flex">
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              Are you currently employed?
+              Disability
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
-                onChange={(e) => setCurrentlyEmployed(e.target.value)}
-                value={currentlyEmployed}
+                onChange={(e) => setDisability(e.target.value)}
+                value={disability}
                 name="salary"
                 className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
               >
@@ -113,79 +166,63 @@ export function FormPositionDetails() {
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
+              <DropdownIcon/>
             </div>
           </div>
-          <div className="flex">
+          {disability === "yes" && (
             <div className="mx-2 w-full flex-1">
               <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-                Disability
+                Please indicate the type of disability
               </div>
               <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-                <select
-                  onChange={(e) => setDisability(e.target.value)}
-                  value={disability}
-                  name="salary"
+                <input
+                  onChange={(e) => setDisabilityType(e.target.value)}
+                  value={disabilityType}
+                  name="disability"
+                  placeholder="Type of disability"
                   className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-                >
-                  <option value="">Select</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
+                />
               </div>
             </div>
-            {disability === "yes" && (
-              <div className="mx-2 w-full flex-1">
-                <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-                  Please indicate the type of disability
-                </div>
-                <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-                  <input
-                    onChange={(e) => setDisabilityType(e.target.value)}
-                    value={disabilityType}
-                    name="disability"
-                    placeholder="Type of disability"
-                    className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-                  />
-                </div>
-              </div>
-            )}
+          )}
+        </div>
+        <div className="flex">
+          <div className="mx-2 w-full flex-1">
+            <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+              Were you reffered by a Convergenc3 employee?
+            </div>
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
+              <select
+                onChange={(e) => setReffered(e.target.value)}
+                value={reffered}
+                name="salary"
+                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+              >
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              <DropdownIcon/>
+            </div>
           </div>
-          <div className="flex">
+          {reffered === "yes" && (
             <div className="mx-2 w-full flex-1">
               <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-                Were you reffered by a Convergenc3 employee?
+                Please indicate the name of the convergenc3 employee
               </div>
               <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-                <select
-                  onChange={(e) => setReffered(e.target.value)}
-                  value={reffered}
-                  name="salary"
+                <input
+                  onChange={(e) => setRefferedBy(e.target.value)}
+                  value={refferedBy}
+                  name="name"
+                  placeholder="Full Name"
                   className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-                >
-                  <option value="">Select</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
+                />
               </div>
             </div>
-            {reffered === "yes" && (
-              <div className="mx-2 w-full flex-1">
-                <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-                  Please indicate the name of the convergenc3 employee
-                </div>
-                <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-                  <input
-                    onChange={(e) => setRefferedBy(e.target.value)}
-                    value={refferedBy}
-                    name="name"
-                    placeholder="Full Name"
-                    className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-        </React.Fragment>
+          )}
+        </div>
+      </React.Fragment>
       <FormStepperControl handleNext={handleNext} step={step} />
     </div>
   );

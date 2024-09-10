@@ -11,6 +11,7 @@ import { reset } from "../store/slices/recruitmentSlice";
 export function FormBackgroundAndProfile() {
   const [experience, setExperience] = useState("");
   const [goals, setGoals] = useState("");
+  const [repository, setRepository] = useState("");
 
   const background = useSelector(
     (state) => state.formDetails.background
@@ -21,6 +22,7 @@ export function FormBackgroundAndProfile() {
   useEffect(() => {
     background ? setExperience(background.experience) : setExperience("");
     background ? setGoals(background.goals) : setGoals("");
+    background ? setGoals(background.repository) : setRepository("");
   }, [background]);
 
   const step = useSelector((state) => state.formDetails.step);
@@ -29,8 +31,8 @@ export function FormBackgroundAndProfile() {
 
   const handleNext = () => {
         if (experience.length > 0 && goals.length > 0) {
-          console.log("Background and profile", { experience: experience, goals:goals});
-          dispatch(setBackground({ experience, goals }));
+          // console.log("Background and profile", { experience: experience, goals:goals,repository:repository});
+          dispatch(setBackground({ experience, goals,repository }));
           dispatch(nextStep());
         } else {
           toast.error(`Please fill in all fields.`, {
@@ -48,7 +50,10 @@ export function FormBackgroundAndProfile() {
           setExperience(e.target.value);
         }else if(words.length <= 200 && e.target.name === 'goals'){
           setGoals(e.target.value);
+        }else if(e.target.name === 'repository'){
+          setRepository(e.target.value);
         }
+        
     };
 
   return (
@@ -88,6 +93,22 @@ export function FormBackgroundAndProfile() {
           {goals.split(/\s+/).length} / 200 words
         </div>
       </div>
+      {department === "developer" && (
+        <div className="mx-2 w-full flex-1">
+          <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+            GitHub Profile Link
+          </div>
+          <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <input
+              onChange={handleChange}
+              value={repository}
+              name="repository"
+              placeholder="GitHub Repo Link"
+              className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+            />
+          </div>
+        </div>
+      )}
       <FormStepperControl handleNext={handleNext} step={step} />
     </div>
   );

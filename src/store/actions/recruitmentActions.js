@@ -26,10 +26,11 @@ export const submitDevForm = createAsyncThunk(
       highestQualificationInstitution,
       currentAreaOfResidence,
       abilityToRelocate,
-      workExperience,
-      goals,
       salaryExpectation,
       notice,
+      workExperience,
+      goals,
+      repository,
       cv,
     },
     { rejectWithValue }
@@ -53,15 +54,16 @@ export const submitDevForm = createAsyncThunk(
         highestQualificationInstitution,
         currentAreaOfResidence,
         abilityToRelocate,
-        workExperience,
-        goals,
         salaryExpectation,
         notice,
+        workExperience,
+        goals,
+        repository,
         cv,
       };
 
       const res = await axios.post(`${url}/recruitment/submitDevForm`, data);
-      console.log("Data",data)
+      // console.log("Data",data)
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -131,7 +133,7 @@ export const submitConsultantForm = createAsyncThunk(
         `${url}/recruitment/submitConsultantForm`,
         data
       );
-      console.log("Data",data)
+      // console.log("Data",data)
       return res.data;
     } catch (error) {
       if (!error.response) {

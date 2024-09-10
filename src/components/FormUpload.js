@@ -70,6 +70,7 @@ export function FormUpload() {
           goals:background.goals,
           salaryExpectation: interviewDetails.selectedSalary,
           notice: interviewDetails.noticePeriod,
+          repository:background.repository,
           cv: fileLink? fileLink: "",
           // aptitudeScore: score,
         })
@@ -109,7 +110,6 @@ export function FormUpload() {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
 
     if (!file) {
       toast.error(`Please upload your`, {
