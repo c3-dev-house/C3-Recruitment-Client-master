@@ -37,6 +37,10 @@ export function FormUpload() {
     (state) => state.formDetails.interviewDate
   );
 
+  const background = useSelector(
+    (state) => state.formDetails.background
+  );
+
   const score = useSelector((state) => state.aptitudeQuestions.score);
 
   const dispatch = useDispatch();
@@ -47,15 +51,28 @@ export function FormUpload() {
         submitDevForm({
           name: personalDetails.name,
           email: personalDetails.email,
-          seniority: positionDetails.seniority,
+          cell: personalDetails.cell,
+          dob: personalDetails.dob,
+          nationality: personalDetails.nationality,
+          gender: personalDetails.gender,
           experience: positionDetails.experience,
-          salary: positionDetails.salary,
-          availableFrom: positionDetails.availability,
-          reasonForApplying: motivationDetails.reason,
-          hardestWorked: motivationDetails.hardest,
-          interviewAvailability: interviewDetails.interviewDate,
-          cv: fileLink,
-          aptitudeScore: score,
+          currentlyEmployed: positionDetails.currentlyEmployed,
+          disability: positionDetails.disability,
+          disabilityType: positionDetails.disabilityType,
+          reffered: positionDetails.reffered,
+          refferedBy: positionDetails.refferedBy,
+          highestQualification: motivationDetails.qualification,
+          highestQualificationYear: motivationDetails.year,
+          highestQualificationInstitution: motivationDetails.institution,
+          currentAreaOfResidence: interviewDetails.residence,
+          abilityToRelocate: interviewDetails.selectedRelocateOption,
+          workExperience:background.experience,
+          goals:background.goals,
+          salaryExpectation: interviewDetails.selectedSalary,
+          notice: interviewDetails.noticePeriod,
+          repository:background.repository,
+          cv: fileLink? fileLink: "",
+          // aptitudeScore: score,
         })
       );
       dispatch(nextStep());
@@ -68,7 +85,6 @@ export function FormUpload() {
           dob: personalDetails.dob,
           nationality: personalDetails.nationality,
           gender: personalDetails.gender,
-          seniority: positionDetails.seniority,
           experience: positionDetails.experience,
           currentlyEmployed: positionDetails.currentlyEmployed,
           disability: positionDetails.disability,
@@ -78,10 +94,14 @@ export function FormUpload() {
           highestQualification: motivationDetails.qualification,
           highestQualificationYear: motivationDetails.year,
           highestQualificationInstitution: motivationDetails.institution,
-          interviewLocation: interviewDetails.interviewLocation,
           currentAreaOfResidence: interviewDetails.residence,
-          cv: fileLink,
-          aptitudeScore: score,
+          abilityToRelocate: interviewDetails.selectedRelocateOption,
+          workExperience:background.experience,
+          goals:background.goals,
+          salaryExpectation: interviewDetails.selectedSalary,
+          notice: interviewDetails.noticePeriod,
+          cv: fileLink? fileLink: "",
+          // aptitudeScore: score,
         })
       );
       dispatch(nextStep());
@@ -90,7 +110,6 @@ export function FormUpload() {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
 
     if (!file) {
       toast.error(`Please upload your`, {
@@ -105,7 +124,7 @@ export function FormUpload() {
 
       formData.append("file", file);
       setUploading(true);
-
+      console.log("formData",formData)
       try {
         const config = {
           headers: {

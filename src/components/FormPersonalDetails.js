@@ -47,25 +47,17 @@ export function FormPersonalDetails() {
   }, [email, dispatch]);
 
   const handleNext = () => {
+      // First, run the name validation
+    const isValid = validations(name,email,cell,nationality);
+    if (!isValid) {
+      // If name is not valid, stop further execution
+      return;
+    }
     if (email.length > 0) {
       dispatch(checkRecruitEmail(email));
     }
 
     if (emailError === null) {
-      if (department === "developer") {
-        if (name.length > 0 && email.length > 0) {
-          dispatch(setPersonalDetails({ name, email }));
-          dispatch(nextStep());
-        } else {
-          toast.error(`Please fill in all fields.`, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            progress: undefined,
-          });
-        }
-      } else {
         if (
           name.length > 0 &&
           email.length > 0 &&
@@ -87,7 +79,6 @@ export function FormPersonalDetails() {
             progress: undefined,
           });
         }
-      }
     } else {
       toast.error(`A submission with this email has already been received.`, {
         position: "top-center",
@@ -100,6 +91,53 @@ export function FormPersonalDetails() {
       dispatch(reset());
     }
   };
+
+  const validations = (name,email,cell,nationality)=>{
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const nationalityRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/
+    const cellRegex = /^[0-9]{7,15}$/ 
+    if (name.length < 3){
+      toast.warning(`Name should be 3 characters minimum.`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    if(!emailRegex.test(email)){
+      toast.warning(`Please enter a valid email address.`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    if(!cellRegex.test(cell)){
+      toast.warning(`Please enter a valid phone number`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    if(!nationalityRegex.test(nationality)){
+      toast.warning(`Please enter a valid nationality`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    return true;
+  }
 
   return (
     <div className="flex flex-col ">
@@ -133,7 +171,6 @@ export function FormPersonalDetails() {
           />
         </div>
       </div>
-      {department === "consultant" && (
         <React.Fragment>
           <div className="flex">
             <div className="mx-2 w-full flex-1">
@@ -142,8 +179,9 @@ export function FormPersonalDetails() {
               </div>
               <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
                 <input
-                  onChange={(e) => setCell(e.target.value)}
-                  value={cell}
+                  type="number"
+                  onChange={(e) => {setCell(e.target.value)}}
+                  value={cell.toString()}
                   name="cell"
                   placeholder="Cellphone Number"
                   className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
@@ -201,7 +239,6 @@ export function FormPersonalDetails() {
             </div>
           </div>
         </React.Fragment>
-      )}
       <FormStepperControl handleNext={handleNext} step={step} />
     </div>
   );

@@ -12,10 +12,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {getUniversitiesSA} from "../store/actions/recruitmentActions";
 import { TextField } from "@mui/material";
+import DropdownIcon from "../generalComponents/dropdown";
 
 export function FormMotivation() {
-  const [reason, setReason] = useState("");
-  const [hardest, setHardest] = useState("");
 
   const [qualification, setQualification] = useState("");
   const [year, setYear] = useState("");
@@ -25,7 +24,6 @@ export function FormMotivation() {
 
   const step = useSelector((state) => state.formDetails.step);
   const dispatch = useDispatch();
-  const department = useSelector((state) => state.formDetails.department);
 
   const motivationDetails = useSelector(
     (state) => state.formDetails.motivationDetails
@@ -40,23 +38,23 @@ export function FormMotivation() {
   const [otherStudyField,setOtherStudyField]=useState("");
 
   const highestQualificationsArray=[
-    "Bachelors of engineering",
+    "Bachelors of Engineering",
     "Bachelor of Engineering Technology",
     "Bachelors of Science Engineering ",
-    "Masters of engineering",
-    "PhD in engineering",
-    "Bachelors of commerce" ,
-    "Bachelors of science",
+    "Masters of Engineering",
+    "PhD in Engineering",
+    "Bachelors of Commerce" ,
+    "Bachelors of Science",
     "Other",
   ]
 
 //User will have to specify their field related to these qualifications
   const qualificationsRequestingSpecifics=[ 
-    "Bachelors of engineering",
+    "Bachelors of Engineering",
     "Bachelor of Engineering Technology",
     "Bachelors of Science Engineering ",
-    "Masters of engineering",
-    "PhD in engineering",
+    "Masters of Engineering",
+    "PhD in Engineering",
   ]
 
   const studyFields=[
@@ -113,8 +111,6 @@ export function FormMotivation() {
   
 
   useEffect(() => {
-    motivationDetails ? setReason(motivationDetails.reason) : setReason("");
-    motivationDetails ? setHardest(motivationDetails.hardest) : setHardest("");
     motivationDetails
       ? setQualification(motivationDetails.qualification)
       : setQualification("");
@@ -130,20 +126,12 @@ export function FormMotivation() {
   }, [qualification]);
 
   const handleNext = () => {
-    if (department === "developer") {
-      if (reason.length > 0 && hardest.length > 0) {
-        dispatch(setMotivationDetails({ reason, hardest }));
-        dispatch(nextStep());
-      } else {
-        toast.error(`Please fill in all fields.`, {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          progress: undefined,
-        });
+      // First, run the name validation
+      const isValid = validations(qualification);
+      if (!isValid) {
+        // If name is not valid, stop further execution
+        return;
       }
-    } else {
       if (
         qualification.length > 0 &&
         year.length > 0 &&
@@ -157,7 +145,7 @@ export function FormMotivation() {
               ? `${qualification} : ${selectedStudyField}`
               : qualification;
         const finalUniversity = institution === "Other" ? otherUniversity : institution;
-        console.log("Submitting non-developer details:", { qualification: finalQualification, year, institution:finalUniversity });
+        // console.log("Submitting non-developer details:", { qualification: finalQualification, year, institution:finalUniversity },otherQualification);
         dispatch(setMotivationDetails({ qualification: finalQualification, year, institution }));
         dispatch(nextStep());
       } else {
@@ -170,51 +158,30 @@ export function FormMotivation() {
         });
       }
     }
-  };
 
-
+  const validations = (qualification)=>{
+    if (studyFieldRequired && !selectedStudyField ){
+      toast.warning(`Please fill in all fields.`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return false
+    }
+    return true;
+  }
 
   return (
     <div className="flex flex-col ">
       <ToastContainer />
-      {department === "developer" ? (
-        <React.Fragment>
-          <div className="mx-2 w-full flex-1">
-            <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              Why are you applying for this position? (max three sentences)
-            </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-              <textarea
-                onChange={(e) => setReason(e.target.value)}
-                value={reason}
-                name="reason"
-                placeholder="Enter your answer"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-              />
-            </div>
-          </div>
-          <div className="mx-2 w-full flex-1">
-            <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              What is the hardest you've ever worked on something in your life?
-            </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-              <textarea
-                onChange={(e) => setHardest(e.target.value)}
-                value={hardest}
-                name="hardest"
-                placeholder="Enter your answer"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-              />
-            </div>
-          </div>
-        </React.Fragment>
-      ) : (
         <React.Fragment>
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
               Highest qualification obtained
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
                 onChange={(e) => {
                   // setQualification(e.target.value)
@@ -229,15 +196,16 @@ export function FormMotivation() {
                 value={qualification}
                 name="qualification"
                 placeholder="Highest qualification"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+                className={'w-full appearance-none p-1 px-2 outline-none text-gray-800'}
               >
-                <option value="">Select your highest qualification</option>
+                {<option value="" className="text-gray-400">Select</option> }
                   {highestQualificationsArray.map((qual, index) => (
                     <option key={index} value={qual}>
                       {qual}
                     </option>
                   ))}
               </select>
+              <DropdownIcon/>
             </div>
           </div>
           {studyFieldRequired &&(
@@ -257,7 +225,7 @@ export function FormMotivation() {
                 placeholder="Highest qualification"
                 className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
               >
-                <option value="" disabled>Select your respective field of study</option>
+                <option value="" disabled>Select</option>
                   {studyFields.map((qual, index) => (
                     <option key={index} value={qual}>
                       {qual}
@@ -293,17 +261,15 @@ export function FormMotivation() {
               In what year did you obtain this qualification? (Enter graduation
               year if currently studying)
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
                 onChange={(e) => setYear(e.target.value)}
                 value={year}
                 name="year"
                 placeholder="Qualifying year"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+                className={'w-full appearance-none p-1 px-2 outline-none text-gray-800'}
               >
-                <option value={""}>In what year did you obtain this qualification? (Enter graduation
-                  year if currently studying)
-                </option>
+                <option value={""} className="text-gray-400">Select</option>
                 {graduationYearArr.map((year,index)=>(
                   <option key={index} value={year}>
                     {year}
@@ -311,13 +277,14 @@ export function FormMotivation() {
                 ))}
 
               </select>
+              <DropdownIcon/>
             </div>
           </div>
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
               Institution where you received the qualification
             </div>
-            <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
                 onChange={(e) => {
                   // setQualification(e.target.value)
@@ -332,9 +299,9 @@ export function FormMotivation() {
                 value={institution}
                 name="institution"
                 placeholder="Qualifying institution"
-                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+                className={'w-full appearance-none p-1 px-2 outline-none text-gray-800'}
               >
-                <option value=''>Institution where you received the qualification</option>
+                <option value='' className="text-gray-400">Select</option>
                 {universitiesArr.map((uni,index)=>(
                   <option key={index} value={uni}>
                     {uni}
@@ -342,6 +309,7 @@ export function FormMotivation() {
                 ))}
 
               </select>
+              <DropdownIcon/>
             </div>
           </div>
           {isOtherUniversity &&(
@@ -356,7 +324,6 @@ export function FormMotivation() {
             </div>
           )}
         </React.Fragment>
-      )}
 
       <FormStepperControl handleNext={handleNext} step={step} />
     </div>

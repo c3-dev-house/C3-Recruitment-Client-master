@@ -44,6 +44,7 @@ const initialState = {
   positionDetails: null,
   motivationDetails: null,
   interviewDate: null,
+  background:null,
   uploadCV: null,
   department: null,
   step: 1,
@@ -66,6 +67,9 @@ export const recruitmentSlice = createSlice({
     },
     setInterviewDateDetails: (state, action) => {
       state.interviewDate = action.payload;
+    },
+    setBackground: (state, action) => {
+      state.background = action.payload;
     },
     setUploadCV: (state, action) => {
       state.uploadCV = action.payload;
@@ -196,6 +200,7 @@ export const {
   setPositionDetails,
   setMotivationDetails,
   setInterviewDateDetails,
+  setBackground,
   setUploadCV,
   setDepartement,
   nextStep,

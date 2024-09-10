@@ -9,7 +9,8 @@ import { FormUpload } from "../components/FormUpload";
 import { FormStepper } from "../components/FormStepper";
 import { FormReview } from "../components/FormReview";
 import { RecruitmentHeader } from "../components/RecruitmentHeader";
-import { AptitudeTest } from "../components/AptitudeTest";
+// import { AptitudeTest } from "../components/AptitudeTest";
+import {FormBackgroundAndProfile} from "../components/Background";
 
 import { Container } from "@mui/material";
 
@@ -28,13 +29,14 @@ export function DevForm() {
   const steps = [
     "Personal Details",
     "Position Details",
-    `${department === "developer" ? "Motivation" : "Qualification"}`,
+    `${department === "developer" ? "Qualification" : "Qualification"}`,
     `${
       department === "developer"
-        ? "Interview Availability"
+        ? "Administrative Questions"
         : "Administrative Questions"
     }`,
     // "Aptitude Test",
+    "Background and Profile",
     "Upload CV",
     "Success",
   ];
@@ -49,11 +51,11 @@ export function DevForm() {
         return <FormMotivation />;
       case 4:
         return <FormAvailability />;
-      // case 5:
-      //   return <AptitudeTest />;
       case 5:
-        return <FormUpload />;
+        return <FormBackgroundAndProfile />;
       case 6:
+        return <FormUpload />;
+      case 7:
         return <FormReview />;
       default:
     }
@@ -63,8 +65,8 @@ export function DevForm() {
     <div className="h-screen">
       <RecruitmentHeader />
       <Container sx={{ pt: 15 }}>
-        {step !== 5 && <FormStepper steps={steps} currentStep={step} />}
-        <div className="m-5 p-10">{displayStep(step)}</div>
+        {step !== 6 && <FormStepper steps={steps} currentStep={step} />}
+        <div className="pt-10">{displayStep(step)}</div>
       </Container>
     </div>
   );
