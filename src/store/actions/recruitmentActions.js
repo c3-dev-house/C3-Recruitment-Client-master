@@ -215,7 +215,8 @@ export const getAptitudeQuestions = createAsyncThunk(
 
 export const getUniversitiesSA = async () => {
   try {
-    const res = await axios.get(`${url}/recruitment/getAllUniversities`);
+    const res = await axios.get(`http://universities.hipolabs.com/search?country=South%20Africa`)//`${url}/recruitment/getAllUniversities`); `http://universities.hipolabs.com/search?country=South%20Africa`
+    console.log(res);
     return res.data;
   } catch (error) {
     if (!error.response) {

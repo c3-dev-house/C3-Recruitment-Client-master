@@ -209,7 +209,11 @@ export function FormMotivation() {
             </div>
           </div>
           {studyFieldRequired &&(
-            <div className="mx-2 my-2 flex rounded border border-gray-200 bg-white p-1 w-full">
+            <React.Fragment>
+            <div className="mx-2 mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+              Field of Study
+            </div>
+            <div className="mx-2 my-2 relative flex rounded border border-gray-200 bg-white p-1 w-full">
               <select
                 onChange={(e) => {
                   if(e.target.value === "Other"){
@@ -232,7 +236,9 @@ export function FormMotivation() {
                     </option>
                   ))}
               </select>
+              <DropdownIcon/>
             </div>
+            </React.Fragment>
           )}
           {isOtherQualfication &&(
             <div className="mx-2">
