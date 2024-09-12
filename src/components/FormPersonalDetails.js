@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { checkRecruitEmail } from "../store/actions/recruitmentActions";
 import { reset } from "../store/slices/recruitmentSlice";
+import { getCountries } from "../store/actions/recruitmentActions";
 
 export function FormPersonalDetails() {
   const [name, setName] = useState("");
@@ -16,6 +17,8 @@ export function FormPersonalDetails() {
   const [dob, setDOB] = useState("");
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
+  const [countryArray,setCountryArray]=useState([]);
+  const countryList = [];
 
   const personalDetails = useSelector(
     (state) => state.formDetails.personalDetails
@@ -25,6 +28,23 @@ export function FormPersonalDetails() {
   const { error: emailError } = emailState;
 
   const department = useSelector((state) => state.formDetails.department);
+
+  useEffect(() => {
+    getCountries().then((countries) => {
+      const countryList = countries
+        .map((country) => country.name.common)
+        // Filter out countries with "Island" or "Islands" in the name
+        .filter((name) => !name.toLowerCase().includes("island") && !name.toLowerCase().includes("islands"));
+  
+      // Add 'Other' to the list and sort alphabetically
+      countryList.push('Other');
+      countryList.sort((a, b) => a.localeCompare(b));
+  
+      setCountryArray(countryList);
+    }).catch((error) => {
+      console.error('Error fetching countries:', error);
+    });
+  }, []);
 
   useEffect(() => {
     personalDetails ? setName(personalDetails.name) : setName("");
@@ -193,13 +213,20 @@ export function FormPersonalDetails() {
                 Nationality
               </div>
               <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
-                <input
+                <select
                   onChange={(e) => setNationality(e.target.value)}
                   value={nationality}
                   name="nationality"
-                  placeholder="Nationality"
-                  className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-                />
+                  className={'w-full appearance-none p-1 px-2 outline-none text-gray-800'}
+                >
+                  <option value='' className="text-gray-400">Select</option>
+                  {countryArray.map((country,index)=>(
+                    <option key={index} value={country}>
+                      {country}
+                    </option>
+                  ))}
+
+                </select>
               </div>
             </div>
           </div>

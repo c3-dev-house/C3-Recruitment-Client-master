@@ -32,6 +32,7 @@ export const submitDevForm = createAsyncThunk(
       goals,
       repository,
       cv,
+      transcript,
     },
     { rejectWithValue }
   ) => {
@@ -60,10 +61,16 @@ export const submitDevForm = createAsyncThunk(
         goals,
         repository,
         cv,
+        transcript,
       };
 
       const res = await axios.post(`${url}/recruitment/submitDevForm`, data);
-      // console.log("Data",data)
+      // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
+      const emailApplicant = await axios.post(
+        `${url}/recruitment/sendDevEmail`, 
+        { email: data.email,name:data.name,stage:"CV to be screened" }
+      );
+
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -100,6 +107,7 @@ export const submitConsultantForm = createAsyncThunk(
       salaryExpectation,
       notice,
       cv,
+      transcript,
     },
     { rejectWithValue }
   ) => {
@@ -127,13 +135,19 @@ export const submitConsultantForm = createAsyncThunk(
         salaryExpectation,
         notice,
         cv,
+        transcript,
       };
 
       const res = await axios.post(
         `${url}/recruitment/submitConsultantForm`,
         data
       );
-      // console.log("Data",data)
+      // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
+      const emailApplicant = await axios.post(
+        `${url}/recruitment/sendConsultantEmail`, 
+        { email: data.email,name:data.name,stage:"CV to be screened" }
+      );
+
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -215,7 +229,20 @@ export const getAptitudeQuestions = createAsyncThunk(
 
 export const getUniversitiesSA = async () => {
   try {
-    const res = await axios.get(`${url}/recruitment/getAllUniversities`);
+    const res = await axios.get(`http://universities.hipolabs.com/search?country=South%20Africa`)//`${url}/recruitment/getAllUniversities`); `http://universities.hipolabs.com/search?country=South%20Africa`
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
+    }
+    return error.response.data.message;
+  }
+};
+
+export const getCountries = async () => {
+  try {
+    const res = await axios.get(`https://restcountries.com/v3.1/all`)
     return res.data;
   } catch (error) {
     if (!error.response) {

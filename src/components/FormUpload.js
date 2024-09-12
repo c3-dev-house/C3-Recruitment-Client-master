@@ -18,6 +18,7 @@ export function FormUpload() {
 
   const [uploading, setUploading] = useState(false);
   const [fileLink, setFileLink] = useState("");
+  const [transcriptLink, setTranscriptLink] = useState("");
 
   const department = useSelector((state) => state.formDetails.department);
 
@@ -72,6 +73,7 @@ export function FormUpload() {
           notice: interviewDetails.noticePeriod,
           repository:background.repository,
           cv: fileLink? fileLink: "",
+          transcript:transcriptLink? transcriptLink: "", 
           // aptitudeScore: score,
         })
       );
@@ -101,6 +103,7 @@ export function FormUpload() {
           salaryExpectation: interviewDetails.selectedSalary,
           notice: interviewDetails.noticePeriod,
           cv: fileLink? fileLink: "",
+          transcript:transcriptLink? transcriptLink: "", 
           // aptitudeScore: score,
         })
       );
@@ -108,7 +111,7 @@ export function FormUpload() {
     }
   };
 
-  const uploadFileHandler = async (e) => {
+  const uploadFileHandler = (category) => async (e) => {
     const file = e.target.files[0];
 
     if (!file) {
@@ -138,8 +141,13 @@ export function FormUpload() {
           formData,
           config
         );
-
-        setFileLink(data.result.key);
+        console.log(data)
+        if(category === "cv"){
+          setFileLink(data.result.key);
+        }
+        if(category === "transcript"){
+          setTranscriptLink(data.result.key)
+        }
         setUploading(false);
       } catch (error) {
         console.error(error);
@@ -161,7 +169,21 @@ export function FormUpload() {
             id="myFile"
             accept="application/pdf"
             name="filename"
-            onChange={uploadFileHandler}
+            onChange={uploadFileHandler("cv")}
+          />
+        </div>
+      </div>
+      <div className="mx-2 w-full flex-1">
+        <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+          Upload your university transcript
+        </div>
+        <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+          <input
+            type="file"
+            id="transcript"
+            accept="application/pdf"
+            name="transcript"
+            onChange={uploadFileHandler("transcript")}
           />
         </div>
       </div>
