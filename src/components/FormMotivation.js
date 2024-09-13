@@ -10,9 +10,10 @@ import {
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {getUniversitiesSA} from "../store/actions/recruitmentActions";
+// import {getUniversitiesSA} from "../store/actions/recruitmentActions";
 import { TextField } from "@mui/material";
 import DropdownIcon from "../generalComponents/dropdown";
+import universitiesSA from "../static/universitiesSA.json";
 
 export function FormMotivation() {
 
@@ -72,7 +73,7 @@ export function FormMotivation() {
   ]
 
   const years = [];
-  const universityList = [];
+  // const universityList = [];
   const currentYear = new Date().getFullYear()
   const startingYear = 1960;
   
@@ -87,17 +88,18 @@ export function FormMotivation() {
   useEffect(() => {
     generateYears();
     // console.log(graduationYearArr)
-    getUniversitiesSA().then((universities) => {
-      universities.map((uni)=>{
-        universityList.push(uni.name)
-      });
-      universityList.push('Other')
-      // console.log(universityList)
-      setUniversitiesArr(universityList)
-    }).catch((error) => {
-      console.error('Error fetching universities:', error);
-    });
+    // getUniversitiesSA().then((universities) => {
+    //   universities.map((uni)=>{
+    //     universityList.push(uni.name)
+    //   });
+    //   universityList.push('Other')
+    //   console.log(universityList)
+    //   setUniversitiesArr(universityList)
+    // }).catch((error) => {
+    //   console.error('Error fetching universities:', error);
+    // });
   },[])
+
 
   const checkIfFieldRequired = (qualification) => {
     const foundQual = qualificationsRequestingSpecifics.find((qual) => qualification === qual);
@@ -308,7 +310,7 @@ export function FormMotivation() {
                 className={'w-full appearance-none p-1 px-2 outline-none text-gray-800'}
               >
                 <option value='' className="text-gray-400">Select</option>
-                {universitiesArr.map((uni,index)=>(
+                {universitiesSA.map((uni,index)=>(
                   <option key={index} value={uni}>
                     {uni}
                   </option>
