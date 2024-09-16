@@ -177,11 +177,12 @@ export const checkRecruitId = createAsyncThunk(
 export const checkRecruitEmail = createAsyncThunk(
   "submit/checkRecruitEmail",
   async (email, { rejectWithValue }) => {
+    console.log("email", email);
     try {
       const res = await axios.post(`${url}/recruitment/checkRecruitEmail`, {
         email,
       });
-
+      console.log("response",res);
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -227,18 +228,18 @@ export const getAptitudeQuestions = createAsyncThunk(
   }
 );
 
-export const getUniversitiesSA = async () => {
-  try {
-    const res = await axios.get(`${url}/recruitment/getAllUniversities`)//`${url}/recruitment/getAllUniversities`); `http://universities.hipolabs.com/search?country=South%20Africa`
-    console.log(res);
-    return res.data;
-  } catch (error) {
-    if (!error.response) {
-      throw error;
-    }
-    return error.response.data.message;
-  }
-};
+// export const getUniversitiesSA = async () => {
+//   try {
+//     const res = await axios.get(`${url}/recruitment/getAllUniversities`)//`${url}/recruitment/getAllUniversities`); `http://universities.hipolabs.com/search?country=South%20Africa`
+//     console.log(res);
+//     return res.data;
+//   } catch (error) {
+//     if (!error.response) {
+//       throw error;
+//     }
+//     return error.response.data.message;
+//   }
+// };
 
 export const getCountries = async () => {
   try {

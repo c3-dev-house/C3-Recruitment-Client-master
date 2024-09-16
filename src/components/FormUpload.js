@@ -19,6 +19,7 @@ export function FormUpload() {
   const [uploading, setUploading] = useState(false);
   const [fileLink, setFileLink] = useState("");
   const [transcriptLink, setTranscriptLink] = useState("");
+  const [acceptedTerms,setAcceptedTerms] = useState(false);
 
   const department = useSelector((state) => state.formDetails.department);
 
@@ -156,6 +157,14 @@ export function FormUpload() {
     }
   };
 
+  const handleCheckboxChange = (event) => {
+    setAcceptedTerms(event.target.checked);
+  };
+
+  const OpenLegalPage = () => {
+    window.open('/legal', '_blank'); // Opens in a new tab or window
+  };
+
   return (
     <div className="flex flex-col ">
       <ToastContainer />
@@ -187,14 +196,36 @@ export function FormUpload() {
           />
         </div>
       </div>
+      <div 
+        className="text-center" 
+        style={{
+          border:"1px solid", 
+          marginLeft: '30%', 
+          marginRight: '30%' ,
+          borderRadius:"10px 10px 10px 10px",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
+          backgroundColor:"InfoBackground"
+        }}>
+        <input 
+          type="checkbox" 
+          id="consent" 
+          name="consent"
+          checked={acceptedTerms}
+          onChange={handleCheckboxChange}
+          required
+        />
+        <label for="consent"> I have read and agree to the <a style={{color:"red"}} onClick={OpenLegalPage}>POPIA Policy</a>.</label>
+      </div>
       {uploading ? (
-        <div className="horizontal container mt-5 ">
+        <div className="horizontal container mt-5">
           <div className="container mt-4 mb-8 flex justify-around">
             <MoonLoader />
           </div>
         </div>
       ) : (
-        <FormStepperControl handleNext={handleNext} step={step} />
+        acceptedTerms && (
+          <FormStepperControl handleNext={handleNext} step={step} />
+        )
       )}
     </div>
   );

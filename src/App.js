@@ -6,6 +6,7 @@ import { Submission } from "./pages/Submission";
 import PageNotFound from "./pages/PageNotFound";
 import { ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import Legal from "./pages/Legal";
 
 const theme = createTheme({
   typography: {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/form" element={<DevForm />} />
           <Route path="/submit/:id" element={<Submission />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/legal" element={<Legal />} />
         </Routes>
       </Router>
     </ThemeProvider>
