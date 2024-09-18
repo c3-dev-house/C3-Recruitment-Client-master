@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-// const url = "http://localhost:3001/v1"; // * development
-const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
+const url = "http://localhost:3001/v1"; // * development
+// const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 export const submitDevForm = createAsyncThunk(
   "recruitment/submitDevForm",
@@ -176,13 +176,18 @@ export const checkRecruitId = createAsyncThunk(
 
 export const checkRecruitEmail = createAsyncThunk(
   "submit/checkRecruitEmail",
-  async (email, { rejectWithValue }) => {
-    console.log("email", email);
+  async ({ email}, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${url}/recruitment/checkRecruitEmail`, {
-        email,
-      });
-      console.log("response",res);
+      const res = await axios.post(
+        `${url}/recruitment/checkRecruitEmail`,
+        { email },
+        {
+          headers: {
+            'auth-token': `${localStorage.getItem('token')}`,  // Add the token to the headers
+          },
+        }
+      );
+      console.log("response", res);
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -192,6 +197,35 @@ export const checkRecruitEmail = createAsyncThunk(
     }
   }
 );
+
+export const isNewApplicant = async (email, name, cell) => {
+  try {
+    const token = localStorage.getItem('token'); // Get token from local storage
+    console.log(token)
+    const res = await axios.post(
+      `${url}/recruitment/isNewApplicant`,
+      {
+        email,
+        name,
+        cell,
+      },
+      {
+        headers: {
+          'auth-token': token,  // Add the token to the headers
+        },
+      }
+    );
+    console.log("response", res);
+    return res.data;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
+    }
+    console.error('Error:', error.response.data);
+    throw error.response.data;
+  }
+}
+
 
 export const submitRepoLink = createAsyncThunk(
   "submit/submitRepoLink",

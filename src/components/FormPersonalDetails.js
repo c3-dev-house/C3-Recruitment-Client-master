@@ -6,7 +6,7 @@ import { FormStepperControl } from "./FormStepperControl";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { checkRecruitEmail } from "../store/actions/recruitmentActions";
+import { checkRecruitEmail, isNewApplicant } from "../store/actions/recruitmentActions";
 import { reset } from "../store/slices/recruitmentSlice";
 import { getCountries } from "../store/actions/recruitmentActions";
 
@@ -61,13 +61,14 @@ export function FormPersonalDetails() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => { // added a name check for same person using different email
     dispatch(reset());
     if (email.length > 0) dispatch(checkRecruitEmail(email));
   }, [email, dispatch]);
 
   const handleNext = () => {
       // First, run the name validation
+    console.log("form details: ",name,email)
     const isValid = validations(name,email,cell,nationality);
     if (!isValid) {
       // If name is not valid, stop further execution
@@ -75,6 +76,7 @@ export function FormPersonalDetails() {
     }
     if (email.length > 0) {
       dispatch(checkRecruitEmail(email));
+      isNewApplicant(email,name,cell);
     }
 
     if (emailError === null) {
