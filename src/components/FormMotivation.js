@@ -150,6 +150,7 @@ export function FormMotivation() {
         // console.log("Submitting non-developer details:", { qualification: finalQualification, year, institution:finalUniversity },otherQualification);
         dispatch(setMotivationDetails({ qualification: finalQualification, year, institution }));
         dispatch(nextStep());
+        localStorage.setItem("graduationYear",year)
       } else {
         toast.error(`Please fill in all fields.`, {
           position: "top-center",

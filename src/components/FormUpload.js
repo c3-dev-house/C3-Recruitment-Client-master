@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FormStepperControl } from "./FormStepperControl";
@@ -20,6 +20,7 @@ export function FormUpload() {
   const [fileLink, setFileLink] = useState("");
   const [transcriptLink, setTranscriptLink] = useState("");
   const [acceptedTerms,setAcceptedTerms] = useState(false);
+  const [transcriptRequired,setTranscriptRequired] = useState(false);
 
   const department = useSelector((state) => state.formDetails.department);
 
@@ -47,7 +48,22 @@ export function FormUpload() {
 
   const dispatch = useDispatch();
 
+  useEffect(()=>{
+    validations()
+  },[])
+
   const handleNext = () => {
+    const isValid = validations();
+    if (!isValid) {
+      toast.error(`Please upload required files`, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+      return;
+    }
     if (department === "developer") {
       dispatch(
         submitDevForm({
@@ -165,12 +181,34 @@ export function FormUpload() {
     window.open('/legal', '_blank'); // Opens in a new tab or window
   };
 
+  const validations = ()=>{
+    let currentYear = new Date().getFullYear();
+    let graduateYear = parseInt(localStorage.getItem('graduationYear'));
+    let conditionalValue = currentYear - graduateYear;
+    console.log(currentYear,typeof(currentYear))
+    console.log(graduateYear,typeof(graduateYear))
+    console.log(conditionalValue)
+    if (conditionalValue<4 && !transcriptLink){
+      setTranscriptRequired(true);
+      return false
+    }
+    if(conditionalValue>4 && !fileLink){
+      return false
+    }
+    return true;
+  }
+
   return (
     <div className="flex flex-col ">
       <ToastContainer />
       <div className="mx-2 w-full flex-1">
-        <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-          Upload your CV
+        <div className="flex">
+          <div style={{ color: "red" }} className="mt-4 text-lg font-bold">
+            *
+          </div>
+          <div className="ml-2 mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+            Upload your CV
+          </div>
         </div>
         <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
           <input
@@ -183,8 +221,15 @@ export function FormUpload() {
         </div>
       </div>
       <div className="mx-2 w-full flex-1">
-        <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-          Upload your university transcript
+        <div className="flex">
+          {transcriptRequired && (
+            <div style={{ color: "red" }} className="mt-4 text-lg font-bold">
+              *
+            </div>
+          )}
+          <div className="ml-2 mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+            Upload your university transcript
+          </div>
         </div>
         <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
           <input
