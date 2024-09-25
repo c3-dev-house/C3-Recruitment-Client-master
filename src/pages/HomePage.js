@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaLongArrowAltRight } from "react-icons/fa";
@@ -7,12 +7,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { setDepartement } from "../store/slices/recruitmentSlice";
 import { RecruitmentHeader } from "../components/RecruitmentHeader";
 import { Grid, Typography,Box,Link, colors } from "@mui/material";
+import axios from "axios";
+
+// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+// const url = "http://localhost:3001/v1"; // * development
+const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 export function HomePage() {
   const [dev, setDev] = useState(false);
   const [consultant, setConsultant] = useState(false);
   const [hoverDev, setHoverDev] = useState(false);
   const [hoverConsultant, setHoverConsultant] = useState(false);
+  const [token, setToken] = useState(null);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -27,6 +34,27 @@ export function HomePage() {
     dispatch(setDepartement("developer"));
       navigate("/form");
   };
+
+  // generate a public token
+
+  useEffect(() => {
+    // Function to fetch the token
+    const fetchToken = async () => {
+      try {
+        // Perform the GET request
+        const response = await axios.get(`${url}/authorization/generatePublicToken`);
+        // Save the token from the response
+        setToken(response.data.token);
+        localStorage.setItem('token',response.data.token)
+      } catch (err) {
+        // Handle errors
+        setError(err.message);
+      }
+    };
+
+    // Call the fetch function
+    fetchToken();
+  }, []);
 
   return (
     <div className="h-screen">
