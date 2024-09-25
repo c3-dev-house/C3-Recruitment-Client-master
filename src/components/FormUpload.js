@@ -153,8 +153,8 @@ export function FormUpload() {
         };
 
         const { data } = await axios.post(
-          `http://localhost:3001/v1/upload`,
-          // `https://uat.api.portal.c3-dev-house.com/v1/upload`,
+          // `http://localhost:3001/v1/upload`,
+          `https://uat.api.portal.c3-dev-house.com/v1/upload`,
           formData,
           config
         );

@@ -10,8 +10,8 @@ import { Grid, Typography,Box,Link, colors } from "@mui/material";
 import axios from "axios";
 
 // const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-const url = "http://localhost:3001/v1"; // * development
-// const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
+// const url = "http://localhost:3001/v1"; // * development
+const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 export function HomePage() {
   const [dev, setDev] = useState(false);
