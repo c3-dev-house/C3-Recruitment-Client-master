@@ -38,21 +38,28 @@ export function HomePage() {
   // generate a public token
 
   useEffect(() => {
-    // Function to fetch the token
+    // Function to fetch the token via POST
     const fetchToken = async () => {
       try {
-        // Perform the GET request
-        const response = await axios.get(`${url}/authorization/generatePublicToken`);
+        // Email and password to send in the POST request
+        const loginData = {
+          email: 'admin@convergenc3.com',
+          password: 'yourpassword'   
+        };
+
+        // Perform the POST request
+        // const response = await axios.post(`${url}/authorization/login`, loginData);
+        const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData);
+        console.log(response)
         // Save the token from the response
         setToken(response.data.token);
-        localStorage.setItem('token',response.data.token)
+        localStorage.setItem('token', response.data.token);
       } catch (err) {
         // Handle errors
         setError(err.message);
       }
     };
 
-    // Call the fetch function
     fetchToken();
   }, []);
 
