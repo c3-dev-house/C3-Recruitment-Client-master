@@ -5,6 +5,11 @@ import axios from "axios";
 // const url = "http://localhost:3001/v1"; // * development
 const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
+// Define the headers variable
+const headers = {
+  'auth-token': localStorage.getItem('token'),  // Get the token from local storage
+};
+
 export const submitDevForm = createAsyncThunk(
   "recruitment/submitDevForm",
   async (
@@ -64,11 +69,11 @@ export const submitDevForm = createAsyncThunk(
         transcript,
       };
 
-      const res = await axios.post(`${url}/recruitment/submitDevForm`, data);
+      const res = await axios.post(`${url}/recruitment/submitDevForm`, data,{headers});
       // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
       const emailApplicant = await axios.post(
         `${url}/recruitment/sendDevEmail`, 
-        { email: data.email,name:data.name,stage:"CV to be screened" }
+        { email: data.email,name:data.name,stage:"CV to be screened" },{headers}
       );
 
       return res.data;
@@ -140,12 +145,12 @@ export const submitConsultantForm = createAsyncThunk(
 
       const res = await axios.post(
         `${url}/recruitment/submitConsultantForm`,
-        data
+        data,{headers}
       );
       // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
       const emailApplicant = await axios.post(
         `${url}/recruitment/sendConsultantEmail`, 
-        { email: data.email,name:data.name,stage:"CV to be screened" }
+        { email: data.email,name:data.name,stage:"CV to be screened" },{headers}
       );
 
       return res.data;
@@ -162,7 +167,7 @@ export const checkRecruitId = createAsyncThunk(
   "submit/checkRecruitId",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${url}/recruitment/checkRecruitId`, { id });
+      const res = await axios.post(`${url}/recruitment/checkRecruitId`, { id },{headers});
 
       return res.data;
     } catch (error) {
@@ -180,12 +185,7 @@ export const checkRecruitEmail = createAsyncThunk(
     try {
       const res = await axios.post(
         `${url}/recruitment/checkRecruitEmail`,
-        { email },
-        {
-          headers: {
-            'auth-token': `${localStorage.getItem('token')}`,  // Add the token to the headers
-          },
-        }
+        { email },{headers}
       );
       console.log("response", res);
       return res.data;
@@ -204,19 +204,16 @@ export const isNewApplicant = async (email, name, cell) => {
     console.log(token)
     const res = await axios.post(
       `${url}/recruitment/isNewApplicant`,
+      // `http://localhost:3001/v1/recruitment/isNewApplicant`,
       {
         email,
         name,
         cell,
-      },
-      {
-        headers: {
-          'auth-token': token,  // Add the token to the headers
-        },
-      }
+      },{headers}
     );
     console.log("response", res);
-    return res.data;
+    // return res.data;
+    return res
   } catch (error) {
     if (!error.response) {
       throw error;
@@ -234,7 +231,7 @@ export const submitRepoLink = createAsyncThunk(
       const res = await axios.post(`${url}/recruitment/submitRepoLink`, {
         id,
         repository,
-      });
+      },{headers});
 
       return res.data;
     } catch (error) {
