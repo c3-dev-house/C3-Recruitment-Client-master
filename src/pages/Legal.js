@@ -78,7 +78,7 @@ const Legal = () => {
           6. Contact Us
         </Typography>
         <Typography variant="body1" gutterBottom sx={{fontStyle:"italic"}}>
-          If you have any questions or concerns about how we handle your personal information, please contact us via email addressed to admin@convergenc3.com.
+          If you have any questions or concerns about how we handle your personal information, please contact us via email addressed to recruitment@convergenc3.com.
         </Typography>
         <Typography variant="body1" gutterBottom sx={{fontStyle:"italic"}}>
           By using our recruitment site, you acknowledge that you have read and understood this disclaimer and agree to the collection, use, and storage of your personal information as described.

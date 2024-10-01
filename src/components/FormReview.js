@@ -10,20 +10,19 @@ export function FormReview() {
   return (
     <div>
       {department === "developer" ? (
-        <>
-          <h1 className="text-3xl font-bold mb-3">Thank You!</h1>
-          <h3>
-            Instructions for your technical test will be emailed to you, along
-            with a submission link.
-          </h3>
-        </>
-      ) : (
-        <>
-          <h1 className="text-3xl font-bold mb-3 text-center">Thank You!</h1>
+        <div className="mt-4">
+          <h1 className="text-3xl font-bold mb-3 text-center">Submission Complete!</h1>
           <h3 className="text-center">
-            We will be in contact with you shortly.
+            Thank You. We will be in contact with you shortly.
           </h3>
-        </>
+        </div>
+      ) : (
+        <div className="mt-4">
+          <h1 className="text-3xl font-bold mb-3 text-center">Submission Complete!</h1>
+          <h3 className="text-center">
+            Thank You. We will be in contact with you shortly.
+          </h3>
+        </div>
       )}
       <div className="horizontal container mt-5 ">
         <div className="container mt-4 mb-8 flex justify-around">
