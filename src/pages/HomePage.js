@@ -49,7 +49,7 @@ export function HomePage() {
 
         // Perform the POST request
         const response = await axios.post(`${url}/authorization/login`, loginData);
-        // const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData);
+        // const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
         console.log(response)
         // Save the token from the response
         setToken(response.data.token);

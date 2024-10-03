@@ -93,15 +93,15 @@ export function FormAvailability() {
                 className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
               >
                 <option value="">Select</option>
-                <option value="limpopo">Limpopo</option>
-                <option value="gauteng">Gauteng</option>
-                <option value="western cape">Western Cape</option>
-                <option value="kwazulu natal">KwaZulu-Natal</option>
-                <option value="free state">Free State</option>
                 <option value="eastern cape">Eastern Cape</option>
+                <option value="free state">Free State</option>
+                <option value="gauteng">Gauteng</option>
+                <option value="kwazulu natal">KwaZulu-Natal</option>
+                <option value="limpopo">Limpopo</option>
                 <option value="mpumalanga">Mpumalanga</option>
-                <option value="northern cape">Northern Cape</option>
                 <option value="north west">North West</option>
+                <option value="northern cape">Northern Cape</option>
+                <option value="western cape">Western Cape</option>
               </select>
               <DropdownIcon/>
             </div>

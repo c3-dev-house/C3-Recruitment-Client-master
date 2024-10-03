@@ -204,7 +204,7 @@ export const isNewApplicant = async (email, name, cell) => {
     console.log(token)
     const res = await axios.post(
       `${url}/recruitment/isNewApplicant`,
-      // `http://localhost:3001/v1/recruitment/isNewApplicant`,
+      // `http://localhost:3001/v1/recruitment/isNewApplicant`,// * development
       {
         email,
         name,
