@@ -38,39 +38,41 @@ export function FormMotivation() {
   const [isOtherStudyField,setIsOtherStudyField]=useState(false)
   const [otherStudyField,setOtherStudyField]=useState("");
 
-  const highestQualificationsArray=[
-    "Bachelors of Engineering",
+  const highestQualificationsArray = [
     "Bachelor of Engineering Technology",
-    "Bachelors of Science Engineering ",
-    "Masters of Engineering",
-    "PhD in Engineering",
-    "Bachelors of Commerce" ,
+    "Bachelors of Commerce",
+    "Bachelors of Engineering",
     "Bachelors of Science",
-    "Other",
-  ]
-
-//User will have to specify their field related to these qualifications
-  const qualificationsRequestingSpecifics=[ 
-    "Bachelors of Engineering",
-    "Bachelor of Engineering Technology",
-    "Bachelors of Science Engineering ",
+    "Bachelors of Science Engineering",
     "Masters of Engineering",
     "PhD in Engineering",
-  ]
+    "Other",
+];
 
-  const studyFields=[
-    "Industrial",
+
+  //User will have to specify their field related to these qualifications
+  const qualificationsRequestingSpecifics = [
+    "Bachelor of Engineering Technology",
+    "Bachelors of Engineering",
+    "Bachelors of Science Engineering",
+    "Masters of Engineering",
+    "PhD in Engineering"
+  ];
+
+
+  const studyFields = [
     "Chemical",
-    "Mechanical",
     "Civil",
-    "Mechatronic",
+    "Data",
     "Electrical",
     "Environmental",
-    "Data",
+    "Industrial",
+    "Mechanical",
+    "Mechatronic",
     "Mining",
     "Transport",
-    "Other",
-  ]
+    "Other"
+];
 
   const years = [];
   // const universityList = [];
