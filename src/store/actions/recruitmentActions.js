@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+const url = "https://api.portal.c3-dev-house.com/v1"; // * production
 // const url = "http://localhost:3001/v1"; // * development
-const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
+// const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 // Define the headers variable
 const headers = {
