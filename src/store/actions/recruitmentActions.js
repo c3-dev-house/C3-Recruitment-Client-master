@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+const url = "https://api.portal.c3-dev-house.com/v1"; // * production
 // const url = "http://localhost:3001/v1"; // * development
-const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
+// const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 // Define the headers variable
 const headers = {
@@ -71,9 +71,9 @@ export const submitDevForm = createAsyncThunk(
 
       const res = await axios.post(`${url}/recruitment/submitDevForm`, data,{headers});
       // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
-      const emailApplicant = await axios.post(
+      await axios.post(
         `${url}/recruitment/sendDevEmail`, 
-        { email: data.email,name:data.name,stage:"CV to be screened" },{headers}
+        { email: data.email,name:data.name,stage:"CV to be screened"},{headers}
       );
 
       return res.data;
