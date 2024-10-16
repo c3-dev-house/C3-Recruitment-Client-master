@@ -150,7 +150,7 @@ export function FormMotivation() {
               : qualification;
         const finalUniversity = institution === "Other" ? otherUniversity : institution;
         // console.log("Submitting non-developer details:", { qualification: finalQualification, year, institution:finalUniversity },otherQualification);
-        dispatch(setMotivationDetails({ qualification: finalQualification, year, institution }));
+        dispatch(setMotivationDetails({ qualification: finalQualification, year, institution:finalUniversity }));
         dispatch(nextStep());
         localStorage.setItem("graduationYear",year)
       } else {

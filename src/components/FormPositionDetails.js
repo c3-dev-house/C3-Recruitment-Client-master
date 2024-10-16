@@ -120,9 +120,9 @@ export function FormPositionDetails() {
               <option value="">Select</option>
                 <React.Fragment>
                   <option value="0-1">0-1 Years</option>
-                  <option value="2-3">2-3 Years</option>
-                  <option value="4-5">4-5 Years</option>
-                  <option value="5+">More than 5 years</option>
+                  <option value="1-3">1-3 Years</option>
+                  <option value="3-7">3-7 Years</option>
+                  <option value="7+">7+ years</option>
                 </React.Fragment>
             </select>
             <DropdownIcon/>
