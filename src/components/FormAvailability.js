@@ -14,7 +14,7 @@ import DropdownIcon from "../generalComponents/dropdown";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
-
+import { colors, TextField } from "@mui/material";
 
 export function FormAvailability() {
 
@@ -22,6 +22,8 @@ export function FormAvailability() {
   const [selectedRelocateOption, setSelectedRelocateOption] = useState("");
   const [selectedSalary,setSelectedSalary]=useState("");
   const [noticePeriod,setNoticePeriod]=useState("");
+  const [otherResidence,setOtherResidence]=useState("")
+  const [isOtherResidence,setIsOtherResidence]=useState(false)
 
   const step = useSelector((state) => state.formDetails.step);
   const dispatch = useDispatch();
@@ -51,13 +53,15 @@ export function FormAvailability() {
   }, [interviewDateDetails]);
 
   const handleNext = () => {
-    if (selectedRelocateOption && 
+    if (selectedRelocateOption &&
       residence.length > 0 &&
       selectedSalary.length > 0 &&
-      noticePeriod.length > 0
+      noticePeriod.length > 0 &&
+      (!isOtherResidence || otherResidence.length > 0) // Ensure otherResidence is checked only when isOtherResidence is true
     ) {
+      const finalResidence = isOtherResidence ? otherResidence : residence;
       // console.log("Residence and ", { selectedRelocateOption: selectedRelocateOption, residence,selectedSalary,noticePeriod});
-      dispatch(setInterviewDateDetails({ selectedRelocateOption,residence,selectedSalary,noticePeriod }));
+      dispatch(setInterviewDateDetails({ selectedRelocateOption,residence:finalResidence,selectedSalary,noticePeriod }));
       dispatch(nextStep());
     } else {
       toast.error(`Please fill in all fields.`, {
@@ -71,10 +75,17 @@ export function FormAvailability() {
   }
   
 
-  const handleCheckbox = (event)=>{
-    const { name } = event.target;
-    setSelectedRelocateOption(name === selectedRelocateOption ? "" : name);
-  }
+  const handleCheckbox = (event) => {
+    const { name, checked } = event.target;
+  
+    // Ensure only the selected checkbox is active
+    if (checked) {
+      setSelectedRelocateOption(name); // Set the name of the selected option
+    } else {
+      setSelectedRelocateOption(""); // Clear the selection if unchecked
+    }
+  };
+  
 
 
   return (
@@ -87,7 +98,17 @@ export function FormAvailability() {
             </div>
             <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
-                onChange={(e) => setResidence(e.target.value)}
+                onChange={(e) => {
+                  // setQualification(e.target.value)
+                  if(e.target.value === "other"){
+                    setIsOtherResidence(true);
+                    setResidence(e.target.value)
+                  }else{
+                    setIsOtherResidence(false);
+                    setResidence(e.target.value)
+                  }
+                }}
+                // onChange={(e) => setResidence(e.target.value)}
                 value={residence}
                 name="residence"
                 className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
@@ -102,9 +123,34 @@ export function FormAvailability() {
                 <option value="north west">North West</option>
                 <option value="northern cape">Northern Cape</option>
                 <option value="western cape">Western Cape</option>
+                <option value="other">Other</option>
               </select>
               <DropdownIcon/>
             </div>
+            {isOtherResidence &&(
+            <>
+              <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+                Other Residence
+              </div>
+              <div className="mt-3">
+                <TextField
+                  value={otherResidence}
+                  onChange={(e) => setOtherResidence(e.target.value)}
+                  variant="outlined"
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      height: '40px', // Set the total height including borders
+                    },
+                    '.MuiInputBase-input': {
+                      height: '35px', // Set the input field height excluding padding and borders
+                      padding: '8px 14px', // Adjust padding as needed
+                    },
+                  }}
+                />
+              </div>
+            </>
+          )}
           </div>
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
