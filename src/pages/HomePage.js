@@ -50,7 +50,7 @@ export function HomePage() {
         // Perform the POST request
         const response = await axios.post(`${url}/authorization/login`, loginData);
         // const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
-        console.log(response)
+        // console.log(response)
         // Save the token from the response
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token);
@@ -70,9 +70,18 @@ export function HomePage() {
       <div>
         <div className="bg-white flex items-center justify-center" style ={{minHeight: '90vh'}}>
           <div className="mx-auto rounded-2xl bg-white md:w-3/4">
-            <h1 className="text-3xl font-bold text-center pb-4">
-              Welcome to Convergenc3 recruitment 
-            </h1>
+          <h1 className="text-3xl font-bold text-center pb-4 flex items-end justify-center">
+            <span style={{ lineHeight: "1" }}>Welcome to</span>
+            <img
+              src="./images/Word-Mark-Black.png"
+              alt="developer"
+              style={{
+                width: "13rem",
+                margin: "0 1rem 3px",
+              }}
+            />
+            <span style={{ lineHeight: "1" }}>recruitment</span>
+          </h1>
             <h2 className="text-center mt-3">
               Are you a consultant or a developer?
             </h2>
@@ -84,36 +93,6 @@ export function HomePage() {
                   alignItems: "center",
                   cursor: "pointer",
                   marginRight:"5%",
-                }}
-                onMouseEnter={() => setHoverDev(true)}
-                onMouseLeave={() => setHoverDev(false)}
-                onClick={selectDev}
-              >
-                <img
-                  src="./images/dev.png"
-                  alt="developer"
-                  style={{
-                    width: "15rem",
-                    filter: hoverDev || dev ? "grayscale(0%)" : "grayscale(100%)",
-                    transition: "all 0.5s ease",
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  className="text-center"
-                  sx={{ pt: 3, color: hoverDev || dev ? "#d92027" : "black" }}
-                >
-                  Developer
-                </Typography>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  marginLeft:"5%",
                 }}
                 onMouseEnter={() => setHoverConsultant(true)}
                 onMouseLeave={() => setHoverConsultant(false)}
@@ -141,6 +120,36 @@ export function HomePage() {
                   }}
                 >
                   Consultant
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  marginLeft:"5%",
+                }}
+                onMouseEnter={() => setHoverDev(true)}
+                onMouseLeave={() => setHoverDev(false)}
+                onClick={selectDev}
+              >
+                <img
+                  src="./images/dev.png"
+                  alt="developer"
+                  style={{
+                    width: "15rem",
+                    filter: hoverDev || dev ? "grayscale(0%)" : "grayscale(100%)",
+                    transition: "all 0.5s ease",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  className="text-center"
+                  sx={{ pt: 3, color: hoverDev || dev ? "#d92027" : "black" }}
+                >
+                  Developer
                 </Typography>
               </div>
             </div>

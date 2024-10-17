@@ -187,7 +187,7 @@ export const checkRecruitEmail = createAsyncThunk(
         `${url}/recruitment/checkRecruitEmail`,
         { email },{headers}
       );
-      console.log("response", res);
+      // console.log("response", res);
       return res.data;
     } catch (error) {
       if (!error.response) {
@@ -201,7 +201,7 @@ export const checkRecruitEmail = createAsyncThunk(
 export const isNewApplicant = async (email, name, cell) => {
   try {
     const token = localStorage.getItem('token'); // Get token from local storage
-    console.log(token)
+    // console.log(token)
     const res = await axios.post(
       `${url}/recruitment/isNewApplicant`,
       // `http://localhost:3001/v1/recruitment/isNewApplicant`,// * development
@@ -211,7 +211,7 @@ export const isNewApplicant = async (email, name, cell) => {
         cell,
       },{headers}
     );
-    console.log("response", res);
+    // console.log("response", res);
     // return res.data;
     return res
   } catch (error) {

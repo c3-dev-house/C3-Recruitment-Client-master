@@ -144,7 +144,7 @@ export function FormUpload() {
 
       formData.append("file", file);
       setUploading(true);
-      console.log("formData",formData)
+      // console.log("formData",formData)
       try {
         const config = {
           headers: {
@@ -159,7 +159,7 @@ export function FormUpload() {
           formData,
           config
         );
-        console.log(data)
+        // console.log(data)
         if(category === "cv"){
           setFileLink(data.result.key);
         }
@@ -186,9 +186,9 @@ export function FormUpload() {
     let currentYear = new Date().getFullYear();
     let graduateYear = parseInt(localStorage.getItem('graduationYear'));
     let conditionalValue = currentYear - graduateYear;
-    console.log(currentYear,typeof(currentYear))
-    console.log(graduateYear,typeof(graduateYear))
-    console.log(conditionalValue)
+    // console.log(currentYear,typeof(currentYear))
+    // console.log(graduateYear,typeof(graduateYear))
+    // console.log(conditionalValue)
     if (conditionalValue<4 && !transcriptLink){
       setTranscriptRequired(true);
       return false
