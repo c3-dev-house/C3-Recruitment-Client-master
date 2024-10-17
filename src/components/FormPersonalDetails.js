@@ -68,7 +68,7 @@ export function FormPersonalDetails() {
 
   const handleNext = () => {
       // First, run the name validation
-    console.log("form details: ",name,email)
+    // console.log("form details: ",name,email)
     const isValid = validations(name,email,cell,nationality);
     if (!isValid) {
       // If name is not valid, stop further execution
