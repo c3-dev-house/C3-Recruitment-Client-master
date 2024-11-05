@@ -177,6 +177,10 @@ export function HomePage() {
             {' '}
             <Link href="/legal" target="_blank" underline="always">
               POPIA policy
+            </Link>
+            {' '}and{' '}  
+            <Link href="dataProcessing" target="_blank" underline="always">
+              Processing Agreement
             </Link>.
           </Typography>
         </Box>
