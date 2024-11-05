@@ -182,6 +182,10 @@ export function FormUpload() {
     window.open('/legal', '_blank'); // Opens in a new tab or window
   };
 
+  const OpenDPA = () => {
+    window.open('/dataProcessing', '_blank'); // Opens in a new tab or window
+  };
+
   const validations = ()=>{
     let currentYear = new Date().getFullYear();
     let graduateYear = parseInt(localStorage.getItem('graduationYear'));
@@ -246,8 +250,8 @@ export function FormUpload() {
         className="text-center" 
         style={{
           border:"1px solid", 
-          marginLeft: '30%', 
-          marginRight: '30%' ,
+          marginLeft: '20%', 
+          marginRight: '20%' ,
           borderRadius:"10px 10px 10px 10px",
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
           backgroundColor:"InfoBackground"
@@ -260,7 +264,10 @@ export function FormUpload() {
           onChange={handleCheckboxChange}
           required
         />
-        <label for="consent"> I have read and agree to the <a style={{color:"red"}} onClick={OpenLegalPage}>POPIA Policy</a>.</label>
+        <label for="consent"> I have read and agree to the{' '} 
+          <a style={{color:"red"}} onClick={OpenLegalPage}>POPIA Policy</a>{' '} and {' '}
+          <a style={{color:"red"}} onClick={OpenDPA}>Data Processing Agreement</a>
+        </label>
       </div>
       {uploading ? (
         <div className="horizontal container mt-5">
