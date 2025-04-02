@@ -45,7 +45,12 @@ export function FormPositionDetails() {
 
   const handleNext = () => {
     // First, run the name validation
-    const isValid = validations(disability,disabilityType,reffered,refferedBy);
+    const isValid = validations(
+      disability,
+      disabilityType,
+      reffered,
+      refferedBy
+    );
     if (!isValid) {
       // If name is not valid, stop further execution
       return;
@@ -76,10 +81,10 @@ export function FormPositionDetails() {
         progress: undefined,
       });
     }
-  }
+  };
 
-  const validations = (disability,type)=>{
-    if (disability === "yes" && !disabilityType.length>0){
+  const validations = (disability, type) => {
+    if (disability === "yes" && !disabilityType.length > 0) {
       toast.warning(`Please fill in all fields.`, {
         position: "top-center",
         autoClose: 3000,
@@ -87,9 +92,9 @@ export function FormPositionDetails() {
         closeOnClick: true,
         progress: undefined,
       });
-      return false
+      return false;
     }
-    if (reffered === "yes" && !refferedBy.length>0){
+    if (reffered === "yes" && !refferedBy.length > 0) {
       toast.warning(`Please fill in all fields.`, {
         position: "top-center",
         autoClose: 3000,
@@ -97,10 +102,19 @@ export function FormPositionDetails() {
         closeOnClick: true,
         progress: undefined,
       });
-      return false
+      return false;
     }
     return true;
-  }
+  };
+
+  const recruitmentSources = [
+    "LinkedIn",
+    "Indeed",
+    "C3 Referral",
+    "Agency",
+    "Website",
+    "Other",
+  ];
 
   return (
     <div className="flex flex-col ">
@@ -108,7 +122,7 @@ export function FormPositionDetails() {
       <div className="flex">
         <div className="mx-2 w-full flex-1">
           <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              Years working experience
+            Years working experience
           </div>
           <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
             <select
@@ -118,37 +132,37 @@ export function FormPositionDetails() {
               className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
             >
               <option value="">Select</option>
-                <React.Fragment>
-                  <option value="0-1">0-1 Years</option>
-                  <option value="1-3">1-3 Years</option>
-                  <option value="3-7">3-7 Years</option>
-                  <option value="7+">7+ years</option>
-                </React.Fragment>
+              <React.Fragment>
+                <option value="0-1">0-1 Years</option>
+                <option value="1-3">1-3 Years</option>
+                <option value="3-7">3-7 Years</option>
+                <option value="7+">7+ years</option>
+              </React.Fragment>
             </select>
-            <DropdownIcon/>
+            <DropdownIcon />
           </div>
         </div>
       </div>
       <React.Fragment>
         <div className="flex">
-        <div className="mx-2 w-full flex-1">
-          <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-            Are you currently employed?
+          <div className="mx-2 w-full flex-1">
+            <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+              Are you currently employed?
+            </div>
+            <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
+              <select
+                onChange={(e) => setCurrentlyEmployed(e.target.value)}
+                value={currentlyEmployed}
+                name="salary"
+                className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+              >
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              <DropdownIcon />
+            </div>
           </div>
-          <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
-            <select
-              onChange={(e) => setCurrentlyEmployed(e.target.value)}
-              value={currentlyEmployed}
-              name="salary"
-              className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
-            >
-              <option value="">Select</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-            <DropdownIcon/>
-          </div>
-        </div>
         </div>
         <div className="flex">
           <div className="mx-2 w-full flex-1">
@@ -166,7 +180,7 @@ export function FormPositionDetails() {
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
-              <DropdownIcon/>
+              <DropdownIcon />
             </div>
           </div>
           {disability === "yes" && (
@@ -189,7 +203,7 @@ export function FormPositionDetails() {
         <div className="flex">
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              Were you reffered by a Convergenc3 employee?
+              Recruitment Source
             </div>
             <div className="my-2 relative flex rounded border border-gray-200 bg-white p-1">
               <select
@@ -199,16 +213,19 @@ export function FormPositionDetails() {
                 className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
               >
                 <option value="">Select</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                {recruitmentSources.map((source) => (
+                  <option key={source} value={source}>
+                    {source}
+                  </option>
+                ))}
               </select>
-              <DropdownIcon/>
+              <DropdownIcon />
             </div>
           </div>
-          {reffered === "yes" && (
+          {reffered === "C3 Referral" ? (
             <div className="mx-2 w-full flex-1">
               <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-                Please indicate the name of the convergenc3 employee
+                Please indicate the name of the Convergenc3 employee
               </div>
               <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
                 <input
@@ -220,7 +237,22 @@ export function FormPositionDetails() {
                 />
               </div>
             </div>
-          )}
+          ) : reffered === "Other" ? (
+            <div className="mx-2 w-full flex-1">
+              <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
+                Please specify your reccruitment source
+              </div>
+              <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
+                <input
+                  onChange={(e) => setRefferedBy(e.target.value)}
+                  value={refferedBy}
+                  name="name"
+                  placeholder="Other source"
+                  className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
       </React.Fragment>
       <FormStepperControl handleNext={handleNext} step={step} />
