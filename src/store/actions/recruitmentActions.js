@@ -7,7 +7,7 @@ const url = "https://api.portal.c3-dev-house.com/v1"; // * production
 
 // Define the headers variable
 const headers = {
-  'auth-token': localStorage.getItem('token'),  // Get the token from local storage
+  "auth-token": localStorage.getItem("token"), // Get the token from local storage
 };
 
 export const submitDevForm = createAsyncThunk(
@@ -69,11 +69,14 @@ export const submitDevForm = createAsyncThunk(
         transcript,
       };
 
-      const res = await axios.post(`${url}/recruitment/submitDevForm`, data,{headers});
+      const res = await axios.post(`${url}/recruitment/submitDevForm`, data, {
+        headers,
+      });
       // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
       await axios.post(
-        `${url}/recruitment/sendDevEmail`, 
-        { email: data.email,name:data.name,stage:"CV to be screened"},{headers}
+        `${url}/recruitment/sendDevEmail`,
+        { email: data.email, name: data.name, stage: "CV to be screened" },
+        { headers }
       );
 
       return res.data;
@@ -145,12 +148,14 @@ export const submitConsultantForm = createAsyncThunk(
 
       const res = await axios.post(
         `${url}/recruitment/submitConsultantForm`,
-        data,{headers}
+        data,
+        { headers }
       );
       // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
       const emailApplicant = await axios.post(
-        `${url}/recruitment/sendConsultantEmail`, 
-        { email: data.email,name:data.name,stage:"CV to be screened" },{headers}
+        `${url}/recruitment/sendConsultantEmail`,
+        { email: data.email, name: data.name, stage: "CV to be screened" },
+        { headers }
       );
 
       return res.data;
@@ -167,7 +172,11 @@ export const checkRecruitId = createAsyncThunk(
   "submit/checkRecruitId",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${url}/recruitment/checkRecruitId`, { id },{headers});
+      const res = await axios.post(
+        `${url}/recruitment/checkRecruitId`,
+        { id },
+        { headers }
+      );
 
       return res.data;
     } catch (error) {
@@ -181,11 +190,12 @@ export const checkRecruitId = createAsyncThunk(
 
 export const checkRecruitEmail = createAsyncThunk(
   "submit/checkRecruitEmail",
-  async ({ email}, { rejectWithValue }) => {
+  async ({ email }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
         `${url}/recruitment/checkRecruitEmail`,
-        { email },{headers}
+        { email },
+        { headers }
       );
       // console.log("response", res);
       return res.data;
@@ -200,38 +210,42 @@ export const checkRecruitEmail = createAsyncThunk(
 
 export const isNewApplicant = async (email, name, cell) => {
   try {
-    const token = localStorage.getItem('token'); // Get token from local storage
+    const token = localStorage.getItem("token"); // Get token from local storage
     // console.log(token)
     const res = await axios.post(
       `${url}/recruitment/isNewApplicant`,
-      // `http://localhost:3001/v1/recruitment/isNewApplicant`,// * development
+      // `http://localhost:3001/v1/recruitment/isNewApplicant`, // * development
       {
         email,
         name,
         cell,
-      },{headers}
+      },
+      { headers }
     );
     // console.log("response", res);
     // return res.data;
-    return res
+    return res;
   } catch (error) {
     if (!error.response) {
       throw error;
     }
-    console.error('Error:', error.response.data);
+    console.error("Error:", error.response.data);
     throw error.response.data;
   }
-}
-
+};
 
 export const submitRepoLink = createAsyncThunk(
   "submit/submitRepoLink",
   async ({ id, repository }, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${url}/recruitment/submitRepoLink`, {
-        id,
-        repository,
-      },{headers});
+      const res = await axios.post(
+        `${url}/recruitment/submitRepoLink`,
+        {
+          id,
+          repository,
+        },
+        { headers }
+      );
 
       return res.data;
     } catch (error) {
@@ -274,12 +288,18 @@ export const getAptitudeQuestions = createAsyncThunk(
 
 export const getCountries = async () => {
   try {
-    const res = await axios.get(`https://restcountries.com/v3.1/all`)
+    const res = await axios.get(`https://restcountries.com/v3.1/alll`);
     return res.data;
   } catch (error) {
-    if (!error.response) {
-      throw error;
-    }
-    return error.response.data.message;
+    console.error("API call failed, falling back to static resource.");
+    // Fallback to static South Africa object
+    return [
+      {
+        name: {
+          common: "South Africa",
+          official: "Republic of South Africa",
+        },
+      },
+    ];
   }
 };
