@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-// const url = "http://localhost:3001/v1"; // * development
+// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+const url = "http://localhost:3001/v1"; // * development
 // const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 // Define the headers variable
@@ -38,6 +38,7 @@ export const submitDevForm = createAsyncThunk(
       repository,
       cv,
       transcript,
+      criminalRecord,
     },
     { rejectWithValue }
   ) => {
@@ -67,6 +68,7 @@ export const submitDevForm = createAsyncThunk(
         repository,
         cv,
         transcript,
+        criminalRecord,
       };
 
       const res = await axios.post(`${url}/recruitment/submitDevForm`, data, {
@@ -116,6 +118,7 @@ export const submitConsultantForm = createAsyncThunk(
       notice,
       cv,
       transcript,
+      criminalRecord,
     },
     { rejectWithValue }
   ) => {
@@ -144,6 +147,7 @@ export const submitConsultantForm = createAsyncThunk(
         notice,
         cv,
         transcript,
+        criminalRecord,
       };
 
       const res = await axios.post(
