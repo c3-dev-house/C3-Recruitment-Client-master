@@ -155,8 +155,8 @@ export function FormUpload() {
         };
 
         const { data } = await axios.post(
-          // `https://api.portal.c3-dev-house.com/v1/upload`,// * production
-          `http://localhost:3001/v1/upload`,// * development
+          `https://api.portal.c3-dev-house.com/v1/upload`,// * production
+          // `http://localhost:3001/v1/upload`,// * development
           // `https://uat.api.portal.c3-dev-house.com/v1/upload`,// * uat
           formData,
           config
