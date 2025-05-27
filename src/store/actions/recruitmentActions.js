@@ -38,6 +38,7 @@ export const submitDevForm = createAsyncThunk(
       repository,
       cv,
       transcript,
+      criminalRecord,
     },
     { rejectWithValue }
   ) => {
@@ -67,6 +68,7 @@ export const submitDevForm = createAsyncThunk(
         repository,
         cv,
         transcript,
+        criminalRecord,
       };
 
       const res = await axios.post(`${url}/recruitment/submitDevForm`, data, {
@@ -116,6 +118,7 @@ export const submitConsultantForm = createAsyncThunk(
       notice,
       cv,
       transcript,
+      criminalRecord,
     },
     { rejectWithValue }
   ) => {
@@ -144,6 +147,7 @@ export const submitConsultantForm = createAsyncThunk(
         notice,
         cv,
         transcript,
+        criminalRecord,
       };
 
       const res = await axios.post(

@@ -90,7 +90,8 @@ export function FormUpload() {
           notice: interviewDetails.noticePeriod,
           repository:background.repository,
           cv: fileLink? fileLink: "",
-          transcript:transcriptLink? transcriptLink: "", 
+          transcript:transcriptLink? transcriptLink: "",
+          criminalRecord:background.criminalRecord,
           // aptitudeScore: score,
         })
       );
@@ -120,7 +121,8 @@ export function FormUpload() {
           salaryExpectation: interviewDetails.selectedSalary,
           notice: interviewDetails.noticePeriod,
           cv: fileLink? fileLink: "",
-          transcript:transcriptLink? transcriptLink: "", 
+          transcript:transcriptLink? transcriptLink: "",
+          criminalRecord:background.criminalRecord,
           // aptitudeScore: score,
         })
       );
