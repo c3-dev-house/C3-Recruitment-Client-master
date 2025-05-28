@@ -111,7 +111,7 @@ export function FormBackgroundAndProfile() {
           {goals.split(/\s+/).length} / 200 words
         </div>
       </div>
-      {department === "developer" && (
+      {(department === "developer" || department === "data") && (
         <div className="mx-2 w-full flex-1">
           <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
             GitHub Profile Link

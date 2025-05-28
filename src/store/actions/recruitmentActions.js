@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-// const url = "http://localhost:3001/v1"; // * development
+// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+const url = "http://localhost:3001/v1"; // * development
 // const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 // Define the headers variable
@@ -80,6 +80,89 @@ export const submitDevForm = createAsyncThunk(
         { email: data.email, name: data.name, stage: "CV to be screened" },
         { headers }
       );
+
+      return res.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const submitDataForm = createAsyncThunk(
+  "recruitment/submitDataForm",
+  async (
+    {
+      name,
+      email,
+      cell,
+      dob,
+      nationality,
+      gender,
+      experience,
+      currentlyEmployed,
+      disability,
+      disabilityType,
+      reffered,
+      refferedBy,
+      highestQualification,
+      highestQualificationYear,
+      highestQualificationInstitution,
+      currentAreaOfResidence,
+      abilityToRelocate,
+      salaryExpectation,
+      notice,
+      workExperience,
+      goals,
+      repository,
+      cv,
+      transcript,
+      criminalRecord,
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const data = {
+       name,
+        email,
+        cell,
+        dob,
+        nationality,
+        gender,
+        experience,
+        currentlyEmployed,
+        disability,
+        disabilityType,
+        reffered,
+        refferedBy,
+        highestQualification,
+        highestQualificationYear,
+        highestQualificationInstitution,
+        currentAreaOfResidence,
+        abilityToRelocate,
+        salaryExpectation,
+        notice,
+        workExperience,
+        goals,
+        repository,
+        cv,
+        transcript,
+        criminalRecord,
+      };
+
+      const res = await axios.post(
+        `${url}/recruitment/submitDataForm`,
+        data,
+        { headers }
+      );
+      // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
+      // const emailApplicant = await axios.post(
+      //   `${url}/recruitment/sendConsultantEmail`,
+      //   { email: data.email, name: data.name, stage: "CV to be screened" },
+      //   { headers }
+      // );
 
       return res.data;
     } catch (error) {
@@ -217,8 +300,8 @@ export const isNewApplicant = async (email, name, cell) => {
     const token = localStorage.getItem("token"); // Get token from local storage
     // console.log(token)
     const res = await axios.post(
-      `${url}/recruitment/isNewApplicant`,
-      // `http://localhost:3001/v1/recruitment/isNewApplicant`, // * development
+      // `${url}/recruitment/isNewApplicant`,
+      `http://localhost:3001/v1/recruitment/isNewApplicant`, // * development
       {
         email,
         name,

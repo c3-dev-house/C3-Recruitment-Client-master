@@ -6,6 +6,7 @@ import { nextStep } from "../store/slices/recruitmentSlice";
 import {
   submitDevForm,
   submitConsultantForm,
+  submitDataForm,
 } from "../store/actions/recruitmentActions";
 import axios from "axios";
 
@@ -19,8 +20,8 @@ export function FormUpload() {
   const [uploading, setUploading] = useState(false);
   const [fileLink, setFileLink] = useState("");
   const [transcriptLink, setTranscriptLink] = useState("");
-  const [acceptedTerms,setAcceptedTerms] = useState(false);
-  const [transcriptRequired,setTranscriptRequired] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [transcriptRequired, setTranscriptRequired] = useState(false);
 
   const department = useSelector((state) => state.formDetails.department);
 
@@ -40,17 +41,15 @@ export function FormUpload() {
     (state) => state.formDetails.interviewDate
   );
 
-  const background = useSelector(
-    (state) => state.formDetails.background
-  );
+  const background = useSelector((state) => state.formDetails.background);
 
   const score = useSelector((state) => state.aptitudeQuestions.score);
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    validations()
-  },[])
+  useEffect(() => {
+    validations();
+  }, []);
 
   const handleNext = () => {
     const isValid = validations();
@@ -84,14 +83,46 @@ export function FormUpload() {
           highestQualificationInstitution: motivationDetails.institution,
           currentAreaOfResidence: interviewDetails.residence,
           abilityToRelocate: interviewDetails.selectedRelocateOption,
-          workExperience:background.experience,
-          goals:background.goals,
+          workExperience: background.experience,
+          goals: background.goals,
           salaryExpectation: interviewDetails.selectedSalary,
           notice: interviewDetails.noticePeriod,
-          repository:background.repository,
-          cv: fileLink? fileLink: "",
-          transcript:transcriptLink? transcriptLink: "",
-          criminalRecord:background.criminalRecord,
+          repository: background.repository,
+          cv: fileLink ? fileLink : "",
+          transcript: transcriptLink ? transcriptLink : "",
+          criminalRecord: background.criminalRecord,
+          // aptitudeScore: score,
+        })
+      );
+      dispatch(nextStep());
+    } else if (department === "data") {
+      dispatch(
+        submitDataForm({
+          name: personalDetails.name,
+          email: personalDetails.email,
+          cell: personalDetails.cell,
+          dob: personalDetails.dob,
+          nationality: personalDetails.nationality,
+          gender: personalDetails.gender,
+          experience: positionDetails.experience,
+          currentlyEmployed: positionDetails.currentlyEmployed,
+          disability: positionDetails.disability,
+          disabilityType: positionDetails.disabilityType,
+          reffered: positionDetails.reffered,
+          refferedBy: positionDetails.refferedBy,
+          highestQualification: motivationDetails.qualification,
+          highestQualificationYear: motivationDetails.year,
+          highestQualificationInstitution: motivationDetails.institution,
+          currentAreaOfResidence: interviewDetails.residence,
+          abilityToRelocate: interviewDetails.selectedRelocateOption,
+          workExperience: background.experience,
+          goals: background.goals,
+          salaryExpectation: interviewDetails.selectedSalary,
+          notice: interviewDetails.noticePeriod,
+          repository: background.repository,
+          cv: fileLink ? fileLink : "",
+          transcript: transcriptLink ? transcriptLink : "",
+          criminalRecord: background.criminalRecord,
           // aptitudeScore: score,
         })
       );
@@ -116,13 +147,13 @@ export function FormUpload() {
           highestQualificationInstitution: motivationDetails.institution,
           currentAreaOfResidence: interviewDetails.residence,
           abilityToRelocate: interviewDetails.selectedRelocateOption,
-          workExperience:background.experience,
-          goals:background.goals,
+          workExperience: background.experience,
+          goals: background.goals,
           salaryExpectation: interviewDetails.selectedSalary,
           notice: interviewDetails.noticePeriod,
-          cv: fileLink? fileLink: "",
-          transcript:transcriptLink? transcriptLink: "",
-          criminalRecord:background.criminalRecord,
+          cv: fileLink ? fileLink : "",
+          transcript: transcriptLink ? transcriptLink : "",
+          criminalRecord: background.criminalRecord,
           // aptitudeScore: score,
         })
       );
@@ -155,18 +186,18 @@ export function FormUpload() {
         };
 
         const { data } = await axios.post(
-          `https://api.portal.c3-dev-house.com/v1/upload`,// * production
-          // `http://localhost:3001/v1/upload`,// * development
+          // `https://api.portal.c3-dev-house.com/v1/upload`,// * production
+          `http://localhost:3001/v1/upload`, // * development
           // `https://uat.api.portal.c3-dev-house.com/v1/upload`,// * uat
           formData,
           config
         );
         // console.log(data)
-        if(category === "cv"){
+        if (category === "cv") {
           setFileLink(data.result.key);
         }
-        if(category === "transcript"){
-          setTranscriptLink(data.result.key)
+        if (category === "transcript") {
+          setTranscriptLink(data.result.key);
         }
         setUploading(false);
       } catch (error) {
@@ -181,29 +212,29 @@ export function FormUpload() {
   };
 
   const OpenLegalPage = () => {
-    window.open('/legal', '_blank'); // Opens in a new tab or window
+    window.open("/legal", "_blank"); // Opens in a new tab or window
   };
 
   const OpenDPA = () => {
-    window.open('/dataProcessing', '_blank'); // Opens in a new tab or window
+    window.open("/dataProcessing", "_blank"); // Opens in a new tab or window
   };
 
-  const validations = ()=>{
+  const validations = () => {
     let currentYear = new Date().getFullYear();
-    let graduateYear = parseInt(localStorage.getItem('graduationYear'));
+    let graduateYear = parseInt(localStorage.getItem("graduationYear"));
     let conditionalValue = currentYear - graduateYear;
     // console.log(currentYear,typeof(currentYear))
     // console.log(graduateYear,typeof(graduateYear))
     // console.log(conditionalValue)
-    if (conditionalValue<4 && !transcriptLink){
+    if (conditionalValue < 4 && !transcriptLink) {
       setTranscriptRequired(true);
-      return false
+      return false;
     }
-    if(conditionalValue>4 && !fileLink){
-      return false
+    if (conditionalValue > 4 && !fileLink) {
+      return false;
     }
     return true;
-  }
+  };
 
   return (
     <div className="flex flex-col ">
@@ -248,27 +279,36 @@ export function FormUpload() {
           />
         </div>
       </div>
-      <div 
-        className="text-center" 
+      <div
+        className="text-center"
         style={{
-          border:"1px solid", 
-          marginLeft: '20%', 
-          marginRight: '20%' ,
-          borderRadius:"10px 10px 10px 10px",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
-          backgroundColor:"InfoBackground"
-        }}>
-        <input 
-          type="checkbox" 
-          id="consent" 
+          border: "1px solid",
+          marginLeft: "20%",
+          marginRight: "20%",
+          borderRadius: "10px 10px 10px 10px",
+          boxShadow:
+            "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
+          backgroundColor: "InfoBackground",
+        }}
+      >
+        <input
+          type="checkbox"
+          id="consent"
           name="consent"
           checked={acceptedTerms}
           onChange={handleCheckboxChange}
           required
         />
-        <label for="consent"> I have read and agree to the{' '} 
-          <a style={{color:"red"}} onClick={OpenLegalPage}>POPIA Policy</a>{' '} and {' '}
-          <a style={{color:"red"}} onClick={OpenDPA}>Data Processing Agreement</a>
+        <label for="consent">
+          {" "}
+          I have read and agree to the{" "}
+          <a style={{ color: "red" }} onClick={OpenLegalPage}>
+            POPIA Policy
+          </a>{" "}
+          and{" "}
+          <a style={{ color: "red" }} onClick={OpenDPA}>
+            Data Processing Agreement
+          </a>
         </label>
       </div>
       {uploading ? (

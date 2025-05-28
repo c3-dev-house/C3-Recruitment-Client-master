@@ -9,15 +9,17 @@ import { RecruitmentHeader } from "../components/RecruitmentHeader";
 import { Grid, Typography,Box,Link, colors } from "@mui/material";
 import axios from "axios";
 
-const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-// const url = "http://localhost:3001/v1"; // * development
+// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+const url = "http://localhost:3001/v1"; // * development
 // const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 export function HomePage() {
   const [dev, setDev] = useState(false);
   const [consultant, setConsultant] = useState(false);
+  const [data, setData] = useState(false);
   const [hoverDev, setHoverDev] = useState(false);
   const [hoverConsultant, setHoverConsultant] = useState(false);
+  const [hoverData, setHoverData] = useState(false);
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
 
@@ -35,6 +37,11 @@ export function HomePage() {
       navigate("/form");
   };
 
+  const selectData = () => {
+    dispatch(setDepartement("data"));
+      navigate("/form");
+  };
+
   // generate a public token
 
   useEffect(() => {
@@ -48,8 +55,8 @@ export function HomePage() {
         };
 
         // Perform the POST request
-        const response = await axios.post(`${url}/authorization/login`, loginData);
-        // const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
+        // const response = await axios.post(`${url}/authorization/login`, loginData);
+        const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
         // console.log(response)
         // Save the token from the response
         setToken(response.data.token);
@@ -83,7 +90,7 @@ export function HomePage() {
             <span style={{ lineHeight: "1" }}>recruitment</span>
           </h1>
             <h2 className="text-center mt-3">
-              Are you a consultant or a developer?
+              Choose an application category
             </h2>
             <div className="flex justify-center" style={{marginTop:"5%"}}>
               <div
@@ -150,6 +157,36 @@ export function HomePage() {
                   sx={{ pt: 3, color: hoverDev || dev ? "#d92027" : "black" }}
                 >
                   Developer
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  marginLeft:"5%",
+                }}
+                onMouseEnter={() => setHoverData(true)}
+                onMouseLeave={() => setHoverData(false)}
+                onClick={selectData}
+              >
+                <img
+                  src="./images/data.png"
+                  alt="data"
+                  style={{
+                    width: "15rem",
+                    filter: hoverData || data ? "grayscale(0%)" : "grayscale(100%)",
+                    transition: "all 0.5s ease",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  className="text-center"
+                  sx={{ pt: 3, color: hoverData || data ? "#d92027" : "black" }}
+                >
+                  Data
                 </Typography>
               </div>
             </div>
