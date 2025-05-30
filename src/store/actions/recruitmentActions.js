@@ -158,11 +158,11 @@ export const submitDataForm = createAsyncThunk(
         { headers }
       );
       // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
-      // const emailApplicant = await axios.post(
-      //   `${url}/recruitment/sendConsultantEmail`,
-      //   { email: data.email, name: data.name, stage: "CV to be screened" },
-      //   { headers }
-      // );
+      const emailApplicant = await axios.post(
+        `${url}/recruitment/sendDataEmail`,
+        { email: data.email, name: data.name, stage: "CV to be screened" },
+        { headers }
+      );
 
       return res.data;
     } catch (error) {

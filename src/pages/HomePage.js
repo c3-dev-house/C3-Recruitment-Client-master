@@ -92,14 +92,13 @@ export function HomePage() {
             <h2 className="text-center mt-3">
               Choose an application category
             </h2>
-            <div className="flex justify-center" style={{marginTop:"5%"}}>
+            <div className="flex justify-center" style={{marginTop:"5%",gap:"70px",marginLeft:"4%"}}>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  marginRight:"5%",
                 }}
                 onMouseEnter={() => setHoverConsultant(true)}
                 onMouseLeave={() => setHoverConsultant(false)}
@@ -135,7 +134,7 @@ export function HomePage() {
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  marginLeft:"5%",
+      
                 }}
                 onMouseEnter={() => setHoverDev(true)}
                 onMouseLeave={() => setHoverDev(false)}
@@ -148,6 +147,7 @@ export function HomePage() {
                     width: "15rem",
                     filter: hoverDev || dev ? "grayscale(0%)" : "grayscale(100%)",
                     transition: "all 0.5s ease",
+                    marginLeft:"1%"
                   }}
                 />
                 <Typography
@@ -165,7 +165,7 @@ export function HomePage() {
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  marginLeft:"5%",
+      
                 }}
                 onMouseEnter={() => setHoverData(true)}
                 onMouseLeave={() => setHoverData(false)}
@@ -175,7 +175,7 @@ export function HomePage() {
                   src="./images/data.png"
                   alt="data"
                   style={{
-                    width: "15rem",
+                    width: "18.7rem",
                     filter: hoverData || data ? "grayscale(0%)" : "grayscale(100%)",
                     transition: "all 0.5s ease",
                   }}

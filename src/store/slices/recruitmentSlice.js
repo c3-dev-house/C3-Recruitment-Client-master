@@ -95,11 +95,21 @@ export const recruitmentSlice = createSlice({
       })
       .addCase(submitDevForm.rejected, (state, action) => {
         state.loading = "error";
+
+        let message = "";
+
         if (action.payload) {
-          state.error = { message: action.payload };
+          message =
+            typeof action.payload === "string"
+              ? action.payload
+              : JSON.stringify(action.payload);
+        } else if (action.error) {
+          message = action.error.message || JSON.stringify(action.error);
         } else {
-          state.error = { message: action.error };
+          message = "Unknown error occurred";
         }
+
+        state.error = { message };
       })
       .addCase(submitConsultantForm.pending, (state, action) => {
         state.loading = "loading";
@@ -109,11 +119,46 @@ export const recruitmentSlice = createSlice({
       })
       .addCase(submitConsultantForm.rejected, (state, action) => {
         state.loading = "error";
+
+        let message = "";
+
         if (action.payload) {
-          state.error = { message: action.payload };
+          message =
+            typeof action.payload === "string"
+              ? action.payload
+              : JSON.stringify(action.payload);
+        } else if (action.error) {
+          message = action.error.message || JSON.stringify(action.error);
         } else {
-          state.error = { message: action.error };
+          message = "Unknown error occurred";
         }
+
+        state.error = { message };
+      })
+
+      .addCase(submitDataForm.pending, (state, action) => {
+        state.loading = "loading";
+      })
+      .addCase(submitDataForm.fulfilled, (state, action) => {
+        state.loading = "success";
+      })
+      .addCase(submitDataForm.rejected, (state, action) => {
+        state.loading = "error";
+
+        let message = "";
+
+        if (action.payload) {
+          message =
+            typeof action.payload === "string"
+              ? action.payload
+              : JSON.stringify(action.payload);
+        } else if (action.error) {
+          message = action.error.message || JSON.stringify(action.error);
+        } else {
+          message = "Unknown error occurred";
+        }
+
+        state.error = { message };
       });
   },
 });

@@ -171,6 +171,14 @@ export function FormPersonalDetails() {
     return true;
   };
 
+  const today = new Date();
+  const eighteenYearsAgo = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
+  const maxDate = eighteenYearsAgo.toISOString().split("T")[0];
+
   return (
     <div className="flex flex-col ">
       <ToastContainer />
@@ -278,6 +286,7 @@ export function FormPersonalDetails() {
                 placeholder="Select a date"
                 type="date"
                 className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
+                max={maxDate}
               />
             </div>
           </div>
