@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-const url = "http://localhost:3001/v1"; // * development
+const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+// const url = "http://localhost:3001/v1"; // * development
 // const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 // Define the headers variable
@@ -300,8 +300,8 @@ export const isNewApplicant = async (email, name, cell) => {
     const token = localStorage.getItem("token"); // Get token from local storage
     // console.log(token)
     const res = await axios.post(
-      // `${url}/recruitment/isNewApplicant`,
-      `http://localhost:3001/v1/recruitment/isNewApplicant`, // * development
+      `${url}/recruitment/isNewApplicant`,
+      // `http://localhost:3001/v1/recruitment/isNewApplicant`, // * development
       {
         email,
         name,

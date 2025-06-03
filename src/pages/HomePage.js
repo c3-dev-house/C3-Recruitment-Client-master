@@ -9,8 +9,8 @@ import { RecruitmentHeader } from "../components/RecruitmentHeader";
 import { Grid, Typography,Box,Link, colors } from "@mui/material";
 import axios from "axios";
 
-// const url = "https://api.portal.c3-dev-house.com/v1"; // * production
-const url = "http://localhost:3001/v1"; // * development
+const url = "https://api.portal.c3-dev-house.com/v1"; // * production
+// const url = "http://localhost:3001/v1"; // * development
 // const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 export function HomePage() {
@@ -55,8 +55,8 @@ export function HomePage() {
         };
 
         // Perform the POST request
-        // const response = await axios.post(`${url}/authorization/login`, loginData);
-        const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
+        const response = await axios.post(`${url}/authorization/login`, loginData);
+        // const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
         // console.log(response)
         // Save the token from the response
         setToken(response.data.token);
