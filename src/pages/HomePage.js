@@ -172,10 +172,10 @@ export function HomePage() {
                 onClick={selectData}
               >
                 <img
-                  src="./images/data.png"
+                  src="./images/data2.png"
                   alt="data"
                   style={{
-                    width: "18.7rem",
+                    width: "15.1rem",
                     filter: hoverData || data ? "grayscale(0%)" : "grayscale(100%)",
                     transition: "all 0.5s ease",
                   }}
