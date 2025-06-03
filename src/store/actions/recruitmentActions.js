@@ -91,6 +91,89 @@ export const submitDevForm = createAsyncThunk(
   }
 );
 
+export const submitDataForm = createAsyncThunk(
+  "recruitment/submitDataForm",
+  async (
+    {
+      name,
+      email,
+      cell,
+      dob,
+      nationality,
+      gender,
+      experience,
+      currentlyEmployed,
+      disability,
+      disabilityType,
+      reffered,
+      refferedBy,
+      highestQualification,
+      highestQualificationYear,
+      highestQualificationInstitution,
+      currentAreaOfResidence,
+      abilityToRelocate,
+      salaryExpectation,
+      notice,
+      workExperience,
+      goals,
+      repository,
+      cv,
+      transcript,
+      criminalRecord,
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const data = {
+       name,
+        email,
+        cell,
+        dob,
+        nationality,
+        gender,
+        experience,
+        currentlyEmployed,
+        disability,
+        disabilityType,
+        reffered,
+        refferedBy,
+        highestQualification,
+        highestQualificationYear,
+        highestQualificationInstitution,
+        currentAreaOfResidence,
+        abilityToRelocate,
+        salaryExpectation,
+        notice,
+        workExperience,
+        goals,
+        repository,
+        cv,
+        transcript,
+        criminalRecord,
+      };
+
+      const res = await axios.post(
+        `${url}/recruitment/submitDataForm`,
+        data,
+        { headers }
+      );
+      // Initial email sent out to applicant. Ensure that stage corresponds to any changes made on portal frontend stages
+      const emailApplicant = await axios.post(
+        `${url}/recruitment/sendDataEmail`,
+        { email: data.email, name: data.name, stage: "CV to be screened" },
+        { headers }
+      );
+
+      return res.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 export const submitConsultantForm = createAsyncThunk(
   "recruitment/submitConsultantForm",
   async (

@@ -2,12 +2,14 @@ export function RecruitmentHeader() {
   return (
     <nav className="mt-4 flex items-center justify-between flex-wrap px-20 py-3 left-0 top-0 w-full bg-white z-50 shadow-md">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <img
-          src="./images/new_logo.png"
-          width="200"
-          height="120"
-          alt="Convergence Logo"
-        />
+        <a href="/">
+          <img
+            src="./images/new_logo.png"
+            width="200"
+            height="120"
+            alt="Convergence Logo"
+          />
+        </a>
       </div>
 
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">

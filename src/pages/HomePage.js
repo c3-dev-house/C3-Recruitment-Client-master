@@ -16,8 +16,10 @@ const url = "https://api.portal.c3-dev-house.com/v1"; // * production
 export function HomePage() {
   const [dev, setDev] = useState(false);
   const [consultant, setConsultant] = useState(false);
+  const [data, setData] = useState(false);
   const [hoverDev, setHoverDev] = useState(false);
   const [hoverConsultant, setHoverConsultant] = useState(false);
+  const [hoverData, setHoverData] = useState(false);
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
 
@@ -32,6 +34,11 @@ export function HomePage() {
 
   const selectDev = () => {
     dispatch(setDepartement("developer"));
+      navigate("/form");
+  };
+
+  const selectData = () => {
+    dispatch(setDepartement("data"));
       navigate("/form");
   };
 
@@ -83,16 +90,15 @@ export function HomePage() {
             <span style={{ lineHeight: "1" }}>recruitment</span>
           </h1>
             <h2 className="text-center mt-3">
-              Are you a consultant or a developer?
+              Choose an application category
             </h2>
-            <div className="flex justify-center" style={{marginTop:"5%"}}>
+            <div className="flex justify-center" style={{marginTop:"5%",gap:"70px",marginLeft:"4%"}}>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  marginRight:"5%",
                 }}
                 onMouseEnter={() => setHoverConsultant(true)}
                 onMouseLeave={() => setHoverConsultant(false)}
@@ -128,7 +134,7 @@ export function HomePage() {
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  marginLeft:"5%",
+      
                 }}
                 onMouseEnter={() => setHoverDev(true)}
                 onMouseLeave={() => setHoverDev(false)}
@@ -141,6 +147,7 @@ export function HomePage() {
                     width: "15rem",
                     filter: hoverDev || dev ? "grayscale(0%)" : "grayscale(100%)",
                     transition: "all 0.5s ease",
+                    marginLeft:"1%"
                   }}
                 />
                 <Typography
@@ -150,6 +157,36 @@ export function HomePage() {
                   sx={{ pt: 3, color: hoverDev || dev ? "#d92027" : "black" }}
                 >
                   Developer
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  cursor: "pointer",
+      
+                }}
+                onMouseEnter={() => setHoverData(true)}
+                onMouseLeave={() => setHoverData(false)}
+                onClick={selectData}
+              >
+                <img
+                  src="./images/data2.png"
+                  alt="data"
+                  style={{
+                    width: "15.1rem",
+                    filter: hoverData || data ? "grayscale(0%)" : "grayscale(100%)",
+                    transition: "all 0.5s ease",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  className="text-center"
+                  sx={{ pt: 3, color: hoverData || data ? "#d92027" : "black" }}
+                >
+                  Data
                 </Typography>
               </div>
             </div>

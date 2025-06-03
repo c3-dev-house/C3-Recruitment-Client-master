@@ -4,6 +4,7 @@ import {
   checkRecruitId,
   submitRepoLink,
   submitConsultantForm,
+  submitDataForm,
   getAptitudeQuestions,
   checkRecruitEmail,
 } from "../actions/recruitmentActions";
@@ -44,7 +45,7 @@ const initialState = {
   positionDetails: null,
   motivationDetails: null,
   interviewDate: null,
-  background:null,
+  background: null,
   uploadCV: null,
   department: null,
   step: 1,
@@ -94,11 +95,21 @@ export const recruitmentSlice = createSlice({
       })
       .addCase(submitDevForm.rejected, (state, action) => {
         state.loading = "error";
+
+        let message = "";
+
         if (action.payload) {
-          state.error = { message: action.payload };
+          message =
+            typeof action.payload === "string"
+              ? action.payload
+              : JSON.stringify(action.payload);
+        } else if (action.error) {
+          message = action.error.message || JSON.stringify(action.error);
         } else {
-          state.error = { message: action.error };
+          message = "Unknown error occurred";
         }
+
+        state.error = { message };
       })
       .addCase(submitConsultantForm.pending, (state, action) => {
         state.loading = "loading";
@@ -108,11 +119,46 @@ export const recruitmentSlice = createSlice({
       })
       .addCase(submitConsultantForm.rejected, (state, action) => {
         state.loading = "error";
+
+        let message = "";
+
         if (action.payload) {
-          state.error = { message: action.payload };
+          message =
+            typeof action.payload === "string"
+              ? action.payload
+              : JSON.stringify(action.payload);
+        } else if (action.error) {
+          message = action.error.message || JSON.stringify(action.error);
         } else {
-          state.error = { message: action.error };
+          message = "Unknown error occurred";
         }
+
+        state.error = { message };
+      })
+
+      .addCase(submitDataForm.pending, (state, action) => {
+        state.loading = "loading";
+      })
+      .addCase(submitDataForm.fulfilled, (state, action) => {
+        state.loading = "success";
+      })
+      .addCase(submitDataForm.rejected, (state, action) => {
+        state.loading = "error";
+
+        let message = "";
+
+        if (action.payload) {
+          message =
+            typeof action.payload === "string"
+              ? action.payload
+              : JSON.stringify(action.payload);
+        } else if (action.error) {
+          message = action.error.message || JSON.stringify(action.error);
+        } else {
+          message = "Unknown error occurred";
+        }
+
+        state.error = { message };
       });
   },
 });
@@ -134,14 +180,43 @@ export const aptitudeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAptitudeQuestions.pending, (state, action) => {
+      .addCase(submitDevForm.pending, (state, action) => {
         state.loading = "loading";
       })
-      .addCase(getAptitudeQuestions.fulfilled, (state, action) => {
+      .addCase(submitDevForm.fulfilled, (state, action) => {
         state.loading = "success";
-        state.questions = action.payload;
       })
-      .addCase(getAptitudeQuestions.rejected, (state, action) => {
+      .addCase(submitDevForm.rejected, (state, action) => {
+        state.loading = "error";
+        if (action.payload) {
+          state.error = { message: action.payload };
+        } else {
+          state.error = { message: action.error };
+        }
+      })
+
+      .addCase(submitConsultantForm.pending, (state, action) => {
+        state.loading = "loading";
+      })
+      .addCase(submitConsultantForm.fulfilled, (state, action) => {
+        state.loading = "success";
+      })
+      .addCase(submitConsultantForm.rejected, (state, action) => {
+        state.loading = "error";
+        if (action.payload) {
+          state.error = { message: action.payload };
+        } else {
+          state.error = { message: action.error };
+        }
+      })
+
+      .addCase(submitDataForm.pending, (state, action) => {
+        state.loading = "loading";
+      })
+      .addCase(submitDataForm.fulfilled, (state, action) => {
+        state.loading = "success";
+      })
+      .addCase(submitDataForm.rejected, (state, action) => {
         state.loading = "error";
         if (action.payload) {
           state.error = { message: action.payload };
