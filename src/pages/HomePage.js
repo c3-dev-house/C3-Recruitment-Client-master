@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaLongArrowAltRight } from "react-icons/fa";
@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setDepartement } from "../store/slices/recruitmentSlice";
 import { RecruitmentHeader } from "../components/RecruitmentHeader";
-import { Grid, Typography,Box,Link, colors } from "@mui/material";
+import { Grid, Typography, Box, Link, colors } from "@mui/material";
 import axios from "axios";
 
 const url = "https://api.portal.c3-dev-house.com/v1"; // * production
@@ -14,12 +14,20 @@ const url = "https://api.portal.c3-dev-house.com/v1"; // * production
 // const url = "https://uat.api.portal.c3-dev-house.com/v1"; // * uat
 
 export function HomePage() {
-  const [dev, setDev] = useState(false);
+  /** Dev track temporarily disabled; keep state stub for reintroduction.
+   * const [dev, setDev] = useState(false);
+   */
   const [consultant, setConsultant] = useState(false);
-  const [data, setData] = useState(false);
-  const [hoverDev, setHoverDev] = useState(false);
+  /** Data track temporarily disabled; keep state stub for reintroduction.
+   * const [data, setData] = useState(false);
+   */
+  /** Dev track temporarily disabled; keep hover state stub for reintroduction.
+   * const [hoverDev, setHoverDev] = useState(false);
+   */
   const [hoverConsultant, setHoverConsultant] = useState(false);
-  const [hoverData, setHoverData] = useState(false);
+  /** Data track temporarily disabled; keep hover state stub for reintroduction.
+   * const [hoverData, setHoverData] = useState(false);
+   */
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
 
@@ -32,15 +40,19 @@ export function HomePage() {
     navigate("/form");
   };
 
-  const selectDev = () => {
-    dispatch(setDepartement("developer"));
-      navigate("/form");
-  };
+  /** Dev track temporarily disabled; keep navigation stub for reintroduction.
+   * const selectDev = () => {
+   *   dispatch(setDepartement("developer"));
+   *   navigate("/form");
+   * };
+   */
 
-  const selectData = () => {
-    dispatch(setDepartement("data"));
-      navigate("/form");
-  };
+  /** Data track temporarily disabled; keep navigation stub for reintroduction.
+   * const selectData = () => {
+   *   dispatch(setDepartement("data"));
+   *   navigate("/form");
+   * };
+   */
 
   // generate a public token
 
@@ -50,17 +62,20 @@ export function HomePage() {
       try {
         // Email and password to send in the POST request
         const loginData = {
-          email: 'admin@convergenc3.com',
-          password: 'yourpassword'   
+          email: "admin@convergenc3.com",
+          password: "yourpassword",
         };
 
         // Perform the POST request
-        const response = await axios.post(`${url}/authorization/login`, loginData);
+        const response = await axios.post(
+          `${url}/authorization/login`,
+          loginData,
+        );
         // const response = await axios.post(`http://localhost:3001/v1/authorization/login`, loginData); // * development
         // console.log(response)
         // Save the token from the response
         setToken(response.data.token);
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem("token", response.data.token);
       } catch (err) {
         // Handle errors
         setError(err.message);
@@ -75,24 +90,28 @@ export function HomePage() {
       <RecruitmentHeader />
       <ToastContainer />
       <div>
-        <div className="bg-white flex items-center justify-center" style ={{minHeight: '90vh'}}>
+        <div
+          className="bg-white flex items-center justify-center"
+          style={{ minHeight: "90vh" }}
+        >
           <div className="mx-auto rounded-2xl bg-white md:w-3/4">
-          <h1 className="text-3xl font-bold text-center pb-4 flex items-end justify-center">
-            <span style={{ lineHeight: "1" }}>Welcome to</span>
-            <img
-              src="./images/Word-Mark-Black.png"
-              alt="developer"
-              style={{
-                width: "13rem",
-                margin: "0 1rem 3px",
-              }}
-            />
-            <span style={{ lineHeight: "1" }}>recruitment</span>
-          </h1>
-            <h2 className="text-center mt-3">
-              Choose an application category
-            </h2>
-            <div className="flex justify-center" style={{marginTop:"5%",gap:"70px",marginLeft:"4%"}}>
+            <h1 className="text-3xl font-bold text-center pb-4 flex items-end justify-center">
+              <span style={{ lineHeight: "1" }}>Welcome to</span>
+              <img
+                src="./images/Word-Mark-Black.png"
+                alt="developer"
+                style={{
+                  width: "13rem",
+                  margin: "0 1rem 3px",
+                }}
+              />
+              <span style={{ lineHeight: "1" }}>recruitment</span>
+            </h1>
+            <h2 className="text-center mt-3">Apply now:</h2>
+            <div
+              className="flex justify-center"
+              style={{ marginTop: "3%", gap: "70px" }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -128,6 +147,7 @@ export function HomePage() {
                   Consultant
                 </Typography>
               </div>
+              {/** Dev track temporarily disabled; keep UI/link stub for reintroduction.
               <div
                 style={{
                   display: "flex",
@@ -159,6 +179,8 @@ export function HomePage() {
                   Developer
                 </Typography>
               </div>
+              */}
+              {/** Data track temporarily disabled; keep UI/link stub for reintroduction.
               <div
                 style={{
                   display: "flex",
@@ -189,36 +211,39 @@ export function HomePage() {
                   Data
                 </Typography>
               </div>
+              */}
             </div>
-            
-            
           </div>
         </div>
-        <Box 
-          sx={{ 
-            marginLeft:'5%',
-            marginRight:'5%',
-            marginBottom:'100px',
-            border: '1px solid #ddd', 
-            borderRadius: '8px', 
-            backgroundColor: '#f9f9f9', 
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            textAlign:'center' 
-          }}>
-          <Typography variant="body1" gutterBottom sx={{fontSize:"12px"}}>
-            <strong>Data Protection Notice: </strong> 
-             We value your privacy and are committed to protecting your personal information in accordance with the Protection of Personal Information Act (POPIA). 
+        <Box
+          sx={{
+            marginLeft: "5%",
+            marginRight: "5%",
+            marginBottom: "100px",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            backgroundColor: "#f9f9f9",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
+            <strong>Data Protection Notice: </strong>
+            We value your privacy and are committed to protecting your personal
+            information in accordance with the Protection of Personal
+            Information Act (POPIA).
           </Typography>
-          <Typography variant="body2" sx={{fontSize:"12px"}}>
-            By proceeding with this form, you agree to our data collection practices as outlined in our 
-            {' '}
+          <Typography variant="body2" sx={{ fontSize: "12px" }}>
+            By proceeding with this form, you agree to our data collection
+            practices as outlined in our{" "}
             <Link href="/legal" target="_blank" underline="always">
               POPIA policy
-            </Link>
-            {' '}and{' '}  
+            </Link>{" "}
+            and{" "}
             <Link href="dataProcessing" target="_blank" underline="always">
               Processing Agreement
-            </Link>.
+            </Link>
+            .
           </Typography>
         </Box>
       </div>
