@@ -26,7 +26,7 @@ export function FormBackgroundAndProfile() {
   useEffect(() => {
     background ? setExperience(background.experience) : setExperience("");
     background ? setGoals(background.goals) : setGoals("");
-    background ? setGoals(background.repository) : setRepository("");
+    background ? setRepository(background.repository || "") : setRepository("");
     background ? setCriminalRecord(background.criminalRecord) : setCriminalRecord("");
   }, [background]);
 
@@ -63,13 +63,11 @@ export function FormBackgroundAndProfile() {
   const handleCheckbox = (event) => {
     const { name, checked } = event.target;
   
-    // Ensure only the selected checkbox is active
     if (checked) {
-      setCriminalRecord(name); // Set the name of the selected option
+      setCriminalRecord(name);
     } else {
-      setCriminalRecord(""); // Clear the selection if unchecked
+      setCriminalRecord("");
     }
-    console.log("Name:",name,"Checked:",checked);
   };
 
   return (
@@ -114,14 +112,14 @@ export function FormBackgroundAndProfile() {
       {(department === "developer" || department === "data") && (
         <div className="mx-2 w-full flex-1">
           <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-            GitHub Profile Link
+            GitHub or portfolio link <span className="normal-case font-normal text-gray-400">(optional)</span>
           </div>
           <div className="my-2 flex rounded border border-gray-200 bg-white p-1">
             <input
               onChange={handleChange}
               value={repository}
               name="repository"
-              placeholder="GitHub Repo Link"
+              placeholder="https://github.com/username or portfolio URL"
               className="w-full appearance-none p-1 px-2 text-gray-800 outline-none"
             />
           </div>

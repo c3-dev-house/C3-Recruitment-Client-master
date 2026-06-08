@@ -9,12 +9,11 @@ import { FormUpload } from "../components/FormUpload";
 import { FormStepper } from "../components/FormStepper";
 import { FormReview } from "../components/FormReview";
 import { RecruitmentHeader } from "../components/RecruitmentHeader";
-// import { AptitudeTest } from "../components/AptitudeTest";
-import {FormBackgroundAndProfile} from "../components/Background";
+import { FormBackgroundAndProfile } from "../components/Background";
 
 import { Container } from "@mui/material";
 
-export function DevForm() {
+export function DevForm({ selectedJob = null }) {
   const step = useSelector((state) => state.formDetails.step);
   const department = useSelector((state) => state.formDetails.department);
 
@@ -29,13 +28,8 @@ export function DevForm() {
   const steps = [
     "Personal Details",
     "Position Details",
-    `${department === "developer" ? "Qualification" : "Qualification"}`,
-    `${
-      department === "developer"
-        ? "Administrative Questions"
-        : "Administrative Questions"
-    }`,
-    // "Aptitude Test",
+    "Qualification",
+    "Administrative Questions",
     "Background and Profile",
     "Upload CV",
     "Success",
@@ -46,7 +40,7 @@ export function DevForm() {
       case 1:
         return <FormPersonalDetails />;
       case 2:
-        return <FormPositionDetails />;
+        return <FormPositionDetails selectedJob={selectedJob} />;
       case 3:
         return <FormMotivation />;
       case 4:
@@ -54,17 +48,25 @@ export function DevForm() {
       case 5:
         return <FormBackgroundAndProfile />;
       case 6:
-        return <FormUpload />;
+        return <FormUpload selectedJob={selectedJob} />;
       case 7:
         return <FormReview />;
       default:
+        return null;
     }
   };
 
   return (
     <div className="h-screen">
       <RecruitmentHeader />
-      <Container sx={{ pt: 15 }}>
+      {selectedJob && (
+        <div className="selected-job-banner">
+          <span>Target role</span>
+          <strong>{selectedJob.title}</strong>
+          <em>{selectedJob.stream} / {selectedJob.experience}</em>
+        </div>
+      )}
+      <Container sx={{ pt: selectedJob ? 8 : 15 }}>
         {step !== 6 && <FormStepper steps={steps} currentStep={step} />}
         <div className="pt-10">{displayStep(step)}</div>
       </Container>

@@ -1,104 +1,113 @@
-import React from 'react';
-import { Box, Typography, Container } from '@mui/material';
+import React from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { AetherCanvas } from "../components/recruitment/AetherCanvas";
+import { OrbitalNav } from "../components/recruitment/OrbitalNav";
+
+function safeRedirect(value) {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/";
+  return value;
+}
 
 const ProcessingAgreement = () => {
+  const [searchParams] = useSearchParams();
+  const redirect = safeRedirect(searchParams.get("redirect"));
+  const encodedRedirect = encodeURIComponent(redirect);
+
   return (
-    <Container sx={{ py: 4 }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
-        <img src='/images/new_logo.png' alt='c3Logo' style={{ width: '200px', marginBottom: '16px',marginLeft:'auto' }} />
-        <Typography variant="h4" gutterBottom>
-          Data Processing Agreement
-        </Typography>
+    <main className="orbital-shell legal-shell">
+      <AetherCanvas />
+      <OrbitalNav compact />
 
-        <Typography variant="h6" gutterBottom>
-          1. Purpose of Agreement
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          This Data Processing Agreement (DPA) governs the processing of personal information by C3 Recruitment on behalf of applicants (Data Subjects) in compliance with the Protection of Personal Information Act (POPIA) of South Africa. It ensures that personal information is handled securely, transparently, and in alignment with POPIA requirements.
-        </Typography>
+      <article className="orbital-panel legal-document">
+        <div className="legal-document-header">
+          <div>
+            <p className="eyebrow">Processing terms</p>
+            <h1>Data Processing Agreement</h1>
+          </div>
+          <div className="legal-actions">
+            <Link className="orbital-button secondary" to={redirect}>Return</Link>
+            <Link className="orbital-button secondary" to={`/legal?redirect=${encodedRedirect}`}>
+              POPIA Privacy Notice
+            </Link>
+          </div>
+        </div>
 
-        <Typography variant="h6" gutterBottom>
-          2. Roles and Responsibilities
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          C3 Recruitment acts as the Data Processor, processing personal information on behalf of the applicants who are the Data Subjects. We commit to processing personal information solely for recruitment purposes as outlined in our POPIA Disclaimer.
-        </Typography>
+        <section>
+          <h2>1. Purpose of Agreement</h2>
+          <p>
+            This Data Processing Agreement governs the processing of applicant personal information by C3 Recruitment
+            in compliance with POPIA. It defines how personal information is handled securely, transparently, and only
+            for recruitment purposes.
+          </p>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          3. Obligations of C3 Recruitment
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          C3 Recruitment agrees to:
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Process personal information solely in accordance with documented instructions provided by the applicant.
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Ensure that anyone authorized to process personal data is subject to a duty of confidentiality.
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Implement and maintain appropriate technical and organizational measures to safeguard personal information.
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Notify applicants promptly of any data breach involving their personal information that could impact their rights.
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Provide assistance to applicants to uphold their rights as specified under POPIA.
-        </Typography>
+        <section>
+          <h2>2. Roles and Responsibilities</h2>
+          <p>
+            C3 Recruitment processes applicant personal information for recruitment administration, assessment,
+            communication, and recordkeeping. Applicants remain the data subjects whose rights are protected under POPIA.
+          </p>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          4. Data Subject Rights and Processor Assistance
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          In compliance with POPIA, C3 Recruitment acknowledges and facilitates the following rights for Data Subjects:
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Access, rectification, deletion, and restriction of personal data, subject to legal obligations.
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          - Assistance with exercising these rights by contacting recruitment@convergenc3.com.
-        </Typography>
+        <section>
+          <h2>3. Obligations of C3 Recruitment</h2>
+          <p>C3 Recruitment will:</p>
+          <ul>
+            <li>Process personal information only for documented recruitment purposes.</li>
+            <li>Restrict access to authorized personnel and service providers.</li>
+            <li>Maintain appropriate confidentiality and security controls.</li>
+            <li>Notify affected applicants where a data incident materially affects their rights.</li>
+            <li>Assist applicants with rights requests as required under POPIA.</li>
+          </ul>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          5. Data Retention and Deletion
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          Personal information is retained only as long as necessary for recruitment, regulatory compliance, or for a maximum of five years post-deregistration. Upon request or end of the retention period, data will be securely deleted or anonymized.
-        </Typography>
+        <section>
+          <h2>4. Applicant Rights and Assistance</h2>
+          <p>
+            Applicants may request access, correction, deletion, or restriction of personal information, subject to
+            legal and recruitment-record retention obligations. Requests may be sent to
+            <a href="mailto:recruitment@convergenc3.com"> recruitment@convergenc3.com</a>.
+          </p>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          6. Security Measures
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          Industry-standard security measures, including access control and secure database management, protect personal information from unauthorized access, disclosure, alteration, or destruction.
-        </Typography>
+        <section>
+          <h2>5. Data Retention and Deletion</h2>
+          <p>
+            Personal information is retained only as long as necessary for recruitment, regulatory compliance, or a
+            maximum of five years after deregistration or final recruitment activity. At the end of the retention period,
+            data will be deleted or anonymized where legally permitted.
+          </p>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          7. Sub-Processors
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          C3 Recruitment may engage third-party service providers to assist in processing personal information, restricted to providers who comply with equivalent data protection standards.
-        </Typography>
+        <section>
+          <h2>6. Security Measures</h2>
+          <p>
+            Security measures include access control, secure database management, confidentiality controls, and
+            operational safeguards against unauthorized access, disclosure, alteration, or destruction.
+          </p>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          8. Limitation of Liability
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          C3 Recruitment’s liability for any data breach or unauthorized disclosure is limited to the extent permissible by law. We commit to rectifying issues promptly to minimize any potential impact on applicants.
-        </Typography>
+        <section>
+          <h2>7. Sub-Processors</h2>
+          <p>
+            C3 Recruitment may use third-party service providers to support recruitment processing. Providers must be
+            restricted to necessary processing and required to apply appropriate data protection standards.
+          </p>
+        </section>
 
-        <Typography variant="h6" gutterBottom>
-          9. Governing Law
-        </Typography>
-        <Typography variant="body1" gutterBottom >
-          This agreement is governed by the laws of South Africa, specifically POPIA.
-        </Typography>
+        <section>
+          <h2>8. Governing Law</h2>
+          <p>This agreement is governed by the laws of South Africa, including POPIA.</p>
+        </section>
 
-        <Typography variant="body1" gutterBottom>
-          C3 Recruitment
-        </Typography>
-      </Box>
-    </Container>
+        <footer className="legal-footer-nav">
+          <Link className="orbital-button secondary" to={redirect}>Return to recruitment</Link>
+          <Link className="orbital-button primary" to={`/legal?redirect=${encodedRedirect}`}>
+            View POPIA Privacy Notice
+          </Link>
+        </footer>
+      </article>
+    </main>
   );
 };
 
