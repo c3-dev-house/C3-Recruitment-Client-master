@@ -3,6 +3,7 @@ export const jobs = [
     _id: "senior-full-stack-developer",
     title: "Senior Full Stack Developer",
     stream: "Developer",
+    trackMode: "cosmos-ridge",
     experience: "4-7 years",
     duration: "Permanent",
     capacity: 3,
@@ -16,6 +17,7 @@ export const jobs = [
     _id: "junior-frontend-developer",
     title: "Junior Frontend Developer",
     stream: "Developer",
+    trackMode: "forest-valley",
     experience: "0-1 year",
     duration: "Permanent",
     capacity: 2,
@@ -29,6 +31,7 @@ export const jobs = [
     _id: "data-scientist",
     title: "Data Scientist",
     stream: "Data",
+    trackMode: "forest-valley",
     experience: "1-3 years",
     duration: "Contract",
     capacity: 1,
@@ -42,6 +45,7 @@ export const jobs = [
     _id: "business-analyst",
     title: "Business Analyst",
     stream: "Business",
+    trackMode: "high-ridge",
     experience: "1-3 years",
     duration: "Permanent",
     capacity: 2,
@@ -55,6 +59,7 @@ export const jobs = [
     _id: "senior-data-engineer",
     title: "Senior Data Engineer",
     stream: "Data",
+    trackMode: "cosmos-ridge",
     experience: "4-7 years",
     duration: "Permanent",
     capacity: 1,
@@ -68,6 +73,7 @@ export const jobs = [
     _id: "inactive-product-manager",
     title: "Product Manager",
     stream: "Business",
+    trackMode: "high-ridge",
     experience: "4-7 years",
     duration: "Permanent",
     capacity: 1,
@@ -79,6 +85,17 @@ export const jobs = [
 ];
 
 export const activeJobs = jobs.filter((job) => job.active);
+
+export function backgroundModeForJob(job) {
+  return job?.trackMode || "forest-valley";
+}
+
+export function backgroundModeForStream(stream) {
+  if (stream === "Business") return "high-ridge";
+  if (stream === "Data") return "cosmos-ridge";
+  if (stream === "Developer") return "forest-valley";
+  return "forest-valley";
+}
 
 export function findJobById(jobId) {
   return jobs.find((job) => job._id === jobId);

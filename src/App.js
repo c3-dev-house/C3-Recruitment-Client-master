@@ -8,6 +8,7 @@ import { createTheme } from "@mui/material/styles";
 import Legal from "./pages/Legal";
 import DataProcessingAgreement from "./pages/DataProcessingAgreement";
 import ListingsPage from "./pages/recruitment/ListingsPage";
+import LandingPage from "./pages/recruitment/LandingPage";
 import JobDetailPage from "./pages/recruitment/JobDetailPage";
 import SignupPage from "./pages/recruitment/SignupPage";
 import ApplyPage from "./pages/recruitment/ApplyPage";
@@ -23,7 +24,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route path="/" element={<ListingsPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/jobs" element={<ListingsPage />} />
           <Route path="/jobs/:jobId" element={<JobDetailPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/apply/:jobId" element={<ApplyPage />} />

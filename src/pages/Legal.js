@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { AetherCanvas } from "../components/recruitment/AetherCanvas";
+import { ValleyBackground } from "../components/recruitment/ValleyBackground";
 import { OrbitalNav } from "../components/recruitment/OrbitalNav";
 
 function safeRedirect(value) {
-  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/";
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/jobs";
   return value;
 }
 
@@ -15,7 +15,7 @@ const Legal = () => {
 
   return (
     <main className="orbital-shell legal-shell">
-      <AetherCanvas />
+      <ValleyBackground mode="forest-valley" />
       <OrbitalNav compact />
 
       <article className="orbital-panel legal-document">

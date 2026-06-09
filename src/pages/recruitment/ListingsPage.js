@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { activeJobs } from "../../data/jobs";
-import { AetherCanvas } from "../../components/recruitment/AetherCanvas";
+import { activeJobs, backgroundModeForStream } from "../../data/jobs";
+import { ValleyBackground } from "../../components/recruitment/ValleyBackground";
 import { JobCard } from "../../components/recruitment/JobCard";
 import { OrbitalNav } from "../../components/recruitment/OrbitalNav";
 
@@ -18,6 +18,7 @@ function getAppliedJobIds() {
 export function ListingsPage() {
   const [filter, setFilter] = useState("All");
   const appliedJobIds = getAppliedJobIds();
+  const backgroundMode = filter === "All" ? "forest-valley" : backgroundModeForStream(filter);
 
   const visibleJobs = useMemo(() => {
     if (filter === "All") return activeJobs;
@@ -33,7 +34,7 @@ export function ListingsPage() {
 
   return (
     <main className="orbital-shell">
-      <AetherCanvas />
+      <ValleyBackground mode={backgroundMode} />
       <OrbitalNav />
 
       <section className="orbital-hero">

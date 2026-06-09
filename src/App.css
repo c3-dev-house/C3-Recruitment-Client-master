@@ -1,21 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Montserrat:wght@600;700;800&display=swap');
 
 :root {
-  --c3-bg: #080a10;
-  --c3-bg-2: #101319;
-  --c3-surface: rgba(16, 19, 25, 0.74);
-  --c3-surface-strong: rgba(29, 32, 38, 0.9);
-  --c3-line: rgba(255, 180, 168, 0.22);
-  --c3-line-strong: rgba(255, 85, 64, 0.55);
+  --c3-bg: #070812;
+  --c3-bg-2: #101426;
+  --c3-surface: rgba(10, 13, 24, 0.68);
+  --c3-surface-strong: rgba(19, 23, 38, 0.88);
+  --c3-line: rgba(255, 194, 151, 0.24);
+  --c3-line-strong: rgba(255, 111, 72, 0.62);
   --c3-red: #d80c0d;
   --c3-red-hot: #ff5540;
-  --c3-text: #f4f4f7;
-  --c3-muted: #bbc7dd;
-  --c3-violet: #8083ff;
+  --c3-sunrise: #ffb36b;
+  --c3-sunset: #f06a58;
+  --c3-ember: #ff7a3d;
+  --c3-dusk: #2b214b;
+  --c3-violet: #8b7cff;
+  --c3-cosmos: #121b3d;
   --c3-cyan: #79d9ff;
+  --c3-forest: #143327;
+  --c3-forest-glow: #59d88f;
+  --c3-pool: #172b4d;
+  --c3-pool-light: #7ad8ff;
+  --c3-mountain-near: #171a2f;
+  --c3-mountain-mid: #25204a;
+  --c3-mountain-far: #39437a;
+  --c3-text: #f7f3f0;
+  --c3-muted: #c9d0df;
   --c3-radius: 14px;
   --c3-radius-sm: 8px;
   --c3-shadow-red: 0 0 36px rgba(216, 12, 13, 0.32);
+  --c3-shadow-sunrise: 0 0 46px rgba(255, 143, 82, 0.34);
+  --c3-shadow-pool: 0 0 42px rgba(122, 216, 255, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -29,14 +43,176 @@ button, input { font: inherit; }
   overflow: hidden;
   padding: 24px clamp(18px, 4vw, 44px) 56px;
   background:
-    radial-gradient(circle at 20% 10%, rgba(216, 12, 13, 0.18), transparent 32%),
-    radial-gradient(circle at 82% 0%, rgba(128, 131, 255, 0.18), transparent 34%),
-    linear-gradient(135deg, #080a10 0%, #101319 54%, #141620 100%);
+    radial-gradient(circle at 50% 18%, rgba(255, 179, 107, 0.12), transparent 32%),
+    linear-gradient(135deg, #070812 0%, #101426 54%, #171a2f 100%);
 }
 
 .center-shell { display: grid; align-content: start; }
 .aether-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.92; }
-.orbital-shell > *:not(.aether-canvas) { position: relative; z-index: 1; }
+.valley-background { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.orbital-shell > *:not(.aether-canvas):not(.valley-background) { position: relative; z-index: 1; }
+
+.valley-sky,
+.valley-stars,
+.valley-pointer-glow,
+.mountain-layer,
+.valley-forest-edge,
+.valley-beacon-glow,
+.valley-beacon-ring,
+.valley-pool {
+  position: absolute;
+  inset: 0;
+}
+.valley-sky {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 179, 107, 0.22), transparent 28%),
+    radial-gradient(circle at 18% 8%, rgba(240, 106, 88, 0.12), transparent 34%),
+    linear-gradient(180deg, #070812 0%, #111936 42%, #2b214b 72%, #172b4d 100%);
+}
+.valley-pointer-glow {
+  z-index: 7;
+  background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 40%), rgba(255, 179, 107, 0.24), rgba(240, 106, 88, 0.09) 18%, transparent 42%);
+  mix-blend-mode: screen;
+  transition: background 180ms ease-out;
+}
+.valley-stars {
+  opacity: 0;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.55) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 44% 8%, rgba(121,217,255,0.48) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 72% 22%, rgba(255,255,255,0.42) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 88% 10%, rgba(139,124,255,0.5) 0 1px, transparent 1.6px);
+  background-size: 260px 180px, 320px 220px, 280px 190px, 360px 240px;
+  transition: opacity 900ms ease;
+}
+.mode-cosmos-ridge .valley-stars { opacity: 0.74; }
+.mountain-layer {
+  top: auto;
+  bottom: 15vh;
+  height: 56vh;
+  transform-origin: 50% 100%;
+  transition: transform 900ms cubic-bezier(.22,.61,.36,1), opacity 900ms ease;
+}
+.mountain-layer::before,
+.mountain-layer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 72%;
+  height: 100%;
+  clip-path: polygon(0 100%, 38% 26%, 52% 42%, 70% 16%, 100% 100%);
+}
+.mountain-far { opacity: 0.6; filter: blur(1px); }
+.mountain-far::before { left: -18%; background: linear-gradient(180deg, rgba(57,67,122,0.52), rgba(37,32,74,0.76)); }
+.mountain-far::after { right: -20%; background: linear-gradient(180deg, rgba(57,67,122,0.44), rgba(37,32,74,0.7)); transform: scaleX(-1); }
+.mountain-mid { bottom: 12vh; opacity: 0.82; }
+.mountain-mid::before { left: -10%; background: linear-gradient(180deg, rgba(43,33,75,0.68), rgba(23,26,47,0.92)); clip-path: polygon(0 100%, 25% 48%, 40% 22%, 60% 38%, 76% 18%, 100% 100%); }
+.mountain-mid::after { right: -12%; background: linear-gradient(180deg, rgba(37,32,74,0.72), rgba(23,26,47,0.96)); transform: scaleX(-1); clip-path: polygon(0 100%, 22% 38%, 40% 18%, 61% 35%, 78% 23%, 100% 100%); }
+.mountain-near { bottom: 9vh; opacity: 0.94; }
+.mountain-near::before { left: -16%; background: linear-gradient(180deg, rgba(20,51,39,0.42), rgba(8,10,22,0.98)); clip-path: polygon(0 100%, 22% 62%, 38% 38%, 54% 56%, 73% 34%, 100% 100%); }
+.mountain-near::after { right: -16%; background: linear-gradient(180deg, rgba(23,26,47,0.78), rgba(8,10,22,1)); transform: scaleX(-1); clip-path: polygon(0 100%, 24% 50%, 42% 30%, 60% 52%, 82% 36%, 100% 100%); }
+.mode-forest-valley .mountain-mid { transform: translate3d(0, -1.2vh, 0) scale(1.02); }
+.mode-high-ridge .mountain-mid { transform: translate3d(-2vw, -2.5vh, 0) scale(1.06); }
+.mode-high-ridge .mountain-near { transform: translate3d(2vw, -1vh, 0) scale(1.04); }
+.mode-cosmos-ridge .mountain-far { transform: translate3d(0, -3vh, 0) scale(1.08); opacity: 0.5; }
+.mode-cosmos-ridge .mountain-mid { transform: translate3d(1vw, -2vh, 0) scale(1.04); }
+.valley-forest-edge {
+  top: auto;
+  bottom: 16vh;
+  height: 18vh;
+  background: radial-gradient(ellipse at 50% 100%, rgba(20,51,39,0.42), transparent 70%);
+  opacity: 0.7;
+}
+.valley-beacon-glow {
+  z-index: 6;
+  background: radial-gradient(circle at 50% 44%, rgba(216,12,13,0.25), rgba(255,122,61,0.16) 11%, rgba(255,179,107,0.07) 23%, transparent 42%);
+  mix-blend-mode: screen;
+}
+.valley-beacon-ring {
+  z-index: 6;
+  width: clamp(190px, 22vw, 330px);
+  height: clamp(190px, 22vw, 330px);
+  inset: 33% auto auto 50%;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 179, 107, 0.22);
+  box-shadow: 0 0 90px rgba(216,12,13,0.26), inset 0 0 60px rgba(255,179,107,0.08);
+  animation: portal-breathe 5.4s ease-in-out infinite;
+}
+.valley-pool {
+  top: auto;
+  height: 20vh;
+  min-height: 118px;
+  z-index: 5;
+  background:
+    linear-gradient(180deg, rgba(23,43,77,0.18), rgba(10,18,36,0.94)),
+    radial-gradient(ellipse at 50% 0%, rgba(255,179,107,0.18), transparent 54%);
+  box-shadow: var(--c3-shadow-pool);
+}
+.pool-reflection {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(216,12,13,0.24), transparent 36%),
+    linear-gradient(90deg, transparent, rgba(122,216,255,0.08), transparent);
+  filter: blur(8px);
+  opacity: 0.8;
+}
+.pool-ripple-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.95; }
+.pool-ripple-canvas canvas { width: 100% !important; height: 100% !important; }
+
+.landing-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 28px;
+}
+.landing-entrance {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 14px;
+  max-width: 760px;
+  margin-top: 0;
+}
+.landing-entrance h1 { font-size: clamp(40px, 7vw, 84px); }
+.landing-lede { color: var(--c3-muted); font-size: clamp(16px, 2vw, 21px); line-height: 1.6; margin: 0 0 16px; }
+.landing-logo-portal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(142px, 17vw, 228px);
+  height: clamp(142px, 17vw, 228px);
+  border-radius: 999px;
+  outline: none;
+}
+.landing-logo-portal:focus-visible { box-shadow: 0 0 0 4px rgba(255,179,107,0.5); }
+.landing-logo-portal img {
+  position: relative;
+  z-index: 2;
+  width: 52%;
+  filter: drop-shadow(0 0 28px rgba(255,85,64,0.72));
+  transition: transform 240ms ease, filter 240ms ease;
+}
+.landing-logo-portal:hover img { transform: scale(1.06); filter: drop-shadow(0 0 38px rgba(255,179,107,0.86)); }
+.portal-glow {
+  position: absolute;
+  inset: 4%;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(216,12,13,0.42), rgba(255,122,61,0.18) 42%, transparent 70%);
+  animation: portal-breathe 5.4s ease-in-out infinite;
+}
+@keyframes portal-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.94); opacity: 0.58; }
+  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}
+.portal-glow { transform: none; }
+.portal-glow { animation-name: portal-glow-breathe; }
+@keyframes portal-glow-breathe {
+  0%, 100% { transform: scale(0.94); opacity: 0.58; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
 
 .orbital-nav {
   max-width: 1180px;
@@ -48,9 +224,9 @@ button, input { font: inherit; }
   padding: 14px 16px;
   border: 1px solid var(--c3-line);
   border-radius: var(--c3-radius);
-  background: rgba(8, 10, 16, 0.58);
+  background: rgba(10, 13, 24, 0.56);
   backdrop-filter: blur(18px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 18px 60px rgba(7,8,18,0.32);
 }
 
 .orbital-brand { display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; color: var(--c3-muted); text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; }
@@ -197,4 +373,6 @@ h3 { font-size: 22px; letter-spacing: -0.025em; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .aether-canvas { opacity: 0.42; }
+  .pool-ripple-canvas { opacity: 0.36; }
+  .valley-pointer-glow { opacity: 0.42; }
 }

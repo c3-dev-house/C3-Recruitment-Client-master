@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AetherCanvas } from "../../components/recruitment/AetherCanvas";
+import { ValleyBackground } from "../../components/recruitment/ValleyBackground";
 import { OrbitalNav } from "../../components/recruitment/OrbitalNav";
-import { findJobById } from "../../data/jobs";
+import { backgroundModeForJob, findJobById } from "../../data/jobs";
 
 export function JobDetailPage() {
   const { jobId } = useParams();
@@ -11,19 +11,20 @@ export function JobDetailPage() {
   if (!job || !job.active) {
     return (
       <main className="orbital-shell center-shell">
-        <AetherCanvas />
+        <ValleyBackground mode="forest-valley" />
         <OrbitalNav compact />
         <section className="orbital-panel not-found-panel">
           <p className="eyebrow">Role unavailable</p>
           <h1>Job not found</h1>
           <p>This listing is either inactive or no longer exists.</p>
-          <Link className="orbital-button primary" to="/">Back to active listings</Link>
+          <Link className="orbital-button primary" to="/jobs">Back to active listings</Link>
         </section>
       </main>
     );
   }
 
   const applyPath = `/apply/${job._id}`;
+  const backgroundMode = backgroundModeForJob(job);
   const beginApply = () => {
     localStorage.setItem("c3RecruitmentRedirect", applyPath);
     navigate(applyPath);
@@ -31,10 +32,10 @@ export function JobDetailPage() {
 
   return (
     <main className="orbital-shell">
-      <AetherCanvas />
+      <ValleyBackground mode={backgroundMode} />
       <OrbitalNav />
       <section className="orbital-panel detail-panel">
-        <Link className="back-link" to="/">← Back to listings</Link>
+        <Link className="back-link" to="/jobs">← Back to listings</Link>
         <div className="detail-layout">
           <article className="detail-main">
             <p className="eyebrow">{job.stream} / {job.location}</p>

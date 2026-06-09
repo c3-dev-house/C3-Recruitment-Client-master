@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AetherCanvas } from "../../components/recruitment/AetherCanvas";
+import { ValleyBackground } from "../../components/recruitment/ValleyBackground";
 import { OrbitalNav } from "../../components/recruitment/OrbitalNav";
 
 function getRedirect(search) {
   const params = new URLSearchParams(search);
-  return params.get("redirect") || localStorage.getItem("c3RecruitmentRedirect") || "/";
+  return params.get("redirect") || localStorage.getItem("c3RecruitmentRedirect") || "/jobs";
 }
 
 export function SignupPage() {
@@ -32,7 +32,7 @@ export function SignupPage() {
 
   return (
     <main className="orbital-shell center-shell">
-      <AetherCanvas />
+      <ValleyBackground mode="forest-valley" />
       <OrbitalNav compact />
       <section className="orbital-panel signup-panel">
         <div>
@@ -58,7 +58,7 @@ export function SignupPage() {
             <input value={form.cell} onChange={update("cell")} required />
           </label>
           <button className="orbital-button primary wide" type="submit">Continue</button>
-          <Link className="orbital-button secondary wide" to="/">Back to listings</Link>
+          <Link className="orbital-button secondary wide" to="/jobs">Back to listings</Link>
         </form>
       </section>
     </main>
