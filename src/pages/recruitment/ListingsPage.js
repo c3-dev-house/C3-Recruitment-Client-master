@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { activeJobs, backgroundModeForStream } from "../../data/jobs";
 import { ValleyBackground } from "../../components/recruitment/ValleyBackground";
 import { JobCard } from "../../components/recruitment/JobCard";
@@ -17,8 +17,11 @@ function getAppliedJobIds() {
 
 export function ListingsPage() {
   const [filter, setFilter] = useState("All");
+  const location = useLocation();
+  const enteredFromPortal = new URLSearchParams(location.search).get("entered") === "1";
   const appliedJobIds = getAppliedJobIds();
-  const backgroundMode = filter === "All" ? "forest-valley" : backgroundModeForStream(filter);
+  const backgroundMode = filter === "All" ? "role-finding" : backgroundModeForStream(filter);
+  const journeyStep = enteredFromPortal || filter === "All" ? 1 : 2;
 
   const visibleJobs = useMemo(() => {
     if (filter === "All") return activeJobs;
@@ -34,7 +37,7 @@ export function ListingsPage() {
 
   return (
     <main className="orbital-shell">
-      <ValleyBackground mode={backgroundMode} />
+      <ValleyBackground mode={backgroundMode} journeyStep={journeyStep} />
       <OrbitalNav />
 
       <section className="orbital-hero">

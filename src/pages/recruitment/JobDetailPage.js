@@ -32,7 +32,7 @@ export function JobDetailPage() {
 
   return (
     <main className="orbital-shell">
-      <ValleyBackground mode={backgroundMode} />
+      <ValleyBackground mode={backgroundMode} journeyStep={3} />
       <OrbitalNav />
       <section className="orbital-panel detail-panel">
         <Link className="back-link" to="/jobs">← Back to listings</Link>

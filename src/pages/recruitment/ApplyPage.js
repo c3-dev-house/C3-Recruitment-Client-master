@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DevForm from "../DevForm";
 import { ValleyBackground } from "../../components/recruitment/ValleyBackground";
@@ -15,8 +15,10 @@ export function ApplyPage() {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const formStep = useSelector((state) => state.formDetails.step || 1);
   const job = findJobById(jobId);
   const backgroundMode = backgroundModeForJob(job);
+  const applicationProgress = Math.min(1, Math.max(0, (formStep - 1) / 6));
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -62,7 +64,8 @@ export function ApplyPage() {
   }
 
   return (
-    <div className="legacy-apply-shell">
+    <div className="legacy-apply-shell themed-apply-shell">
+      <ValleyBackground mode={backgroundMode} journeyStep={4} applicationProgress={applicationProgress} />
       <div className="apply-context-bar">
         <Link to={`/jobs/${job._id}`}>← Back to role</Link>
         <span>Applying for {job.title}</span>
