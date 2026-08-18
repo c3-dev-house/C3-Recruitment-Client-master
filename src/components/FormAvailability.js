@@ -154,41 +154,41 @@ export function FormAvailability() {
           </div>
           <div className="mx-2 w-full flex-1">
             <div className="mt-3 h-6 text-xs font-bold uppercase leading-8 text-gray-500">
-              Would you be willing to relocate to Johannesburg?
+              Where would you be willing to relocate to?
             </div>
               <FormGroup className="pl-3 text-gray-800">
                 <FormControlLabel
                   control={
                     <Checkbox
                       style={{color:"gray"}}
-                      checked={selectedRelocateOption === "yes"}
+                      checked={selectedRelocateOption === "johannesburg"}
                       onChange={handleCheckbox}
-                      name="yes"
+                      name="johannesburg"
                     />
                   }
-                  label="Yes"
+                  label="Johannesburg"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
                       style={{color:"gray"}}
-                      checked={selectedRelocateOption === "no"}
+                      checked={selectedRelocateOption === "cape town"}
                       onChange={handleCheckbox}
-                      name="no"
+                      name="cape town"
                     />
                   }
-                  label="No"
+                  label="Cape Town"
                 />
                 <FormControlLabel
                   control={
                     <Checkbox
                       style={{color:"gray"}}
-                      checked={selectedRelocateOption === "limited"}
+                      checked={selectedRelocateOption === "both"}
                       onChange={handleCheckbox}
-                      name="limited"
+                      name="both"
                     />
                   }
-                  label="For a limited amount of time"
+                  label="Both"
                 />
               </FormGroup>
           </div>
